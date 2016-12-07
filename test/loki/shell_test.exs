@@ -12,7 +12,7 @@ defmodule Loki.ShellTest do
   end
 
   @tag :skip
-  test "saying to terminal" do
+  test "asking yes?" do
     given = nil
     expected = true
 
@@ -20,34 +20,12 @@ defmodule Loki.ShellTest do
   end
 
   @tag :skip
-  test "saying success message" do
+  test "asking no?" do
     given = nil
     expected = true
 
     assert given == expected
   end
 
-  @tag :skip
-  test "saying error message" do
-    given = nil
-    expected = true
-
-    assert given == expected
-  end
-
-  @tag :skip
-  test "saying conflict message" do
-    given = nil
-    expected = true
-
-    assert given == expected
-  end
-
-  @tag :skip
-  test "saying force message" do
-    given = nil
-    expected = true
-
-    assert given == expected
-  end
+  #TODO: say
 end
