@@ -4,10 +4,50 @@ defmodule Loki.ShellTest do
   import Loki.Shell
 
   @tag :skip
-  test "should aks user input in terminal" do
+  test "asking user input" do
+    given = nil
+    expected = true
+
+    assert given == expected
   end
 
   @tag :skip
-  test "should say to terminal" do
+  test "saying to terminal" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying success message" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying error message" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying conflict message" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying force message" do
+    given = nil
+    expected = true
+
+    assert given == expected
   end
 end
