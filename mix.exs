@@ -16,17 +16,17 @@ defmodule Loki.Mixfile do
 
   defp description do
     """
-    Description
+     Loki is a toolkit for building powerful command-line interfaces.
     """
   end
 
   defp package do
     [
       name: :loki,
-      files: [],
-      maintainers: [],
-      licenses: [],
-      links: []
+      files: ["lib", "test", "README*", "LICENSE*"],
+      maintainers: ["Marat Khusnetdinov"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/khusnetdinov/loki"}
     ]
   end
 
