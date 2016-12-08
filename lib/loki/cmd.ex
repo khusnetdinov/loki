@@ -1,4 +1,6 @@
 defmodule Loki.Cmd do
+  import Loki.Shell
+
   @moduledoc """
   """
 
@@ -37,5 +39,14 @@ defmodule Loki.Cmd do
   def execute_in_path(string, path, opts) when is_bitstring(string) and is_bitstring(path) and is_list(opts) do
     [command | args] = String.split(string)
     System.cmd(command, args, env: opts, cd: path)
+  end
+
+
+  @doc """
+  """
+  @spec format_output(Tuple.t) :: String.t
+  def format_output({output, _}) do
+    say ""
+    say IO.ANSI.format([:yellow, output])
   end
 end
