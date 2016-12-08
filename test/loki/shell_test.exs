@@ -27,5 +27,43 @@ defmodule Loki.ShellTest do
     assert given == expected
   end
 
-  #TODO: say
+  @tag :skip
+  test "say to shell" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying create" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying error" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying conflict" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
+
+  @tag :skip
+  test "saying exists" do
+    given = nil
+    expected = true
+
+    assert given == expected
+  end
 end
