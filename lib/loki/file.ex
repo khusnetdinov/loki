@@ -5,7 +5,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec create_file(String.t) :: Boolean.t
+  @spec create_file(Path.t) :: Boolean.t
   def create_file(path) when is_bitstring(path) do
     create_file(path, "")
   end
@@ -15,7 +15,7 @@ defmodule Loki.File do
   def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept String, [String]!"
 
   @doc false
-  @spec create_file(String.t, String.t) :: Boolean.t
+  @spec create_file(Path.t, String.t) :: Boolean.t
   def create_file(path, content) do
     case File.write(path, content, []) do
       :ok ->
@@ -29,7 +29,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec create_file_force(String.t, String.t) :: Boolean.t
+  @spec create_file_force(Path.t, String.t) :: Boolean.t
   def create_file_force(path, content) do
     case File.write(path, content, []) do
       :ok ->
@@ -43,7 +43,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec create_file_force_or_skip(String.t, String.t) :: Boolean.t | none()
+  @spec create_file_force_or_skip(Path.t, String.t) :: Boolean.t | none()
   def create_file_force_or_skip(path, content) do
      if yes?(" Do you want to force create file? [Yn] ") do
        create_file_force(path, content)
@@ -55,7 +55,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec exists_file?(String.t) :: Boolean.t
+  @spec exists_file?(Path.t) :: Boolean.t
   def exists_file?(path) when is_bitstring(path), do: File.exists? path
 
   @doc false
@@ -65,9 +65,16 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec identical_file?(String.t, String.t) :: Boolean.t
+  @spec identical_file?(Path.t, Path.t) :: Boolean.t
   def identical_file?(path, renderer) do
     {:ok, content} = File.read(path)
     content == renderer
   end
+
+
+  @doc """
+  """
+  @spec copy_file(Path.t, Path.t) :: {:ok, non_neg_integer} | {:error, posix}
+  def copy_file(source, target), do: File.copy(source, target)
+
 end
