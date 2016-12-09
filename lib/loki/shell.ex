@@ -14,8 +14,8 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec ask(String.t | List.t) :: Tuple.t
-  def ask(input) when is_input(input) do
-    args = format(input)
+  def ask(message) when is_input(message) do
+    args = format(IO.gets message)
     OptionParser.parse([args])
   end
 
@@ -65,11 +65,41 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_create(String.t) :: none()
-  def say_create(message) when is_input(message), do: say IO.ANSI.format([:green, " *   create ", :reset, message])
+  def say_create(message) when is_input(message), do: say IO.ANSI.format([:green, " * creating ", :reset, message])
 
   @doc false
   @spec say_create(any) :: none()
-  def say_create(_any), do: raise ArgumentError, message: "Invalid argument, accept String"
+  def say_create(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
+
+
+  @doc """
+  """
+  @spec say_force(String.t) :: none()
+  def say_force(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *    force ", :reset, message])
+
+  @doc false
+  @spec say_force(any) :: none()
+  def say_force(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
+
+
+  @doc """
+  """
+  @spec say_identic(String.t) :: none()
+  def say_identic(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " *  identic ", :reset, message])
+
+  @doc false
+  @spec say_identic(any) :: none()
+  def say_identic(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
+
+
+  @doc """
+  """
+  @spec say_skip(String.t) :: none()
+  def say_skip(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *     skip ", :reset, message])
+
+  @doc false
+  @spec say_skip(any) :: none()
+  def say_skip(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
 
 
   @doc """
@@ -79,7 +109,7 @@ defmodule Loki.Shell do
 
   @doc false
   @spec say_error(String.t) :: none()
-  def say_error(_any), do: raise ArgumentError, message: "Invalid argument, accept String"
+  def say_error(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
 
 
   @doc """
@@ -89,17 +119,17 @@ defmodule Loki.Shell do
 
   @doc false
   @spec say_conflict(String.t) :: none()
-  def say_conflict(_any), do: raise ArgumentError, message: "Invalid argument, accept String"
+  def say_conflict(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
 
 
   @doc """
   """
   @spec say_exists(String.t) :: none()
-  def say_exists(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " *   exists ", :reset, message])
+  def say_exists(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " * existing ", :reset, message])
 
   @doc false
   @spec say_exists(String.t) :: none()
-  def say_exists(_any), do: raise ArgumentError, message: "Invalid argument, accept String"
+  def say_exists(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
 
 
   @doc false
