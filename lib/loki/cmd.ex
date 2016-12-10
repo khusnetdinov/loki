@@ -7,9 +7,7 @@ defmodule Loki.Cmd do
   @doc """
   """
   @spec execute(String.t) :: none()
-  def execute(string) when is_bitstring(string) do
-    execute(string, [])
-  end
+  def execute(string) when is_bitstring(string), do: execute(string, [])
 
   @doc false
   @spec execute(any) :: none()
@@ -26,9 +24,7 @@ defmodule Loki.Cmd do
   @doc """
   """
   @spec execute_in_path(String.t, Path.t) :: none()
-  def execute_in_path(string, path) when is_bitstring(string) and is_bitstring(path) do
-     execute_in_path(string, path, [])
-  end
+  def execute_in_path(string, path) when is_bitstring(string) and is_bitstring(path), do: execute_in_path(string, path, [])
 
   @doc false
   @spec execute_in_path(any) :: none()

@@ -134,8 +134,6 @@ defmodule Loki.Shell do
 
   @doc false
   @spec format(String.t) :: String.t
-  defp format(input) do
-    String.replace(input, "\n", "") |> String.downcase
-  end
+  defp format(input), do: String.replace(input, "\n", "") |> String.downcase
 end
 

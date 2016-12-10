@@ -6,16 +6,14 @@ defmodule Loki.File do
   @doc """
   """
   @spec create_file(Path.t) :: Boolean.t
-  def create_file(path) when is_bitstring(path) do
-    create_file(path, "")
-  end
+  def create_file(path) when is_bitstring(path), do: create_file(path, "")
 
   @doc false
   @spec create_file(any) :: none()
   def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept String, [String]!"
 
   @doc false
-  @spec create_file(Path.t, String.t) :: Boolean.t
+  @spec create_file(Path.t, String.t) :: :ok | {:error, String.t}
   def create_file(path, content) do
     case File.write(path, content, []) do
       :ok ->
@@ -23,18 +21,19 @@ defmodule Loki.File do
         :ok
       {:error, reason} ->
         say_error("Can't create: #{path}: #{reason}!")
+        {:error, reason}
     end
   end
 
 
   @doc """
   """
-  @spec create_file_force(Path.t, String.t) :: Boolean.t
+  @spec create_file_force(Path.t, String.t) :: :force | {:error, String.t}
   def create_file_force(path, content) do
     case File.write(path, content, []) do
       :ok ->
         say_force("#{path}")
-        :ok
+        :force
       {:error, reason} ->
         say_error("Can't create: #{path}: #{reason}!")
     end
@@ -43,12 +42,13 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec create_file_force_or_skip(Path.t, String.t) :: Boolean.t | none()
+  @spec create_file_force_or_skip(Path.t, String.t) :: :force | :skip | {:error, String.t}
   def create_file_force_or_skip(path, content) do
      if yes?(" Do you want to force create file? [Yn] ") do
        create_file_force(path, content)
      else
        say_skip("#{path}")
+       :skip
      end
   end
 
@@ -74,7 +74,30 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec copy_file(Path.t, Path.t) :: {:ok, non_neg_integer} | {:error, posix}
-  def copy_file(source, target), do: File.copy(source, target)
+  @spec copy_file(Path.t, Path.t) :: :ok | {:error, Streang.t}
+  def copy_file(source, target) do
+    case File.copy(source, target) do
+      {:ok, _} ->
+        say IO.ANSI.format [:green, " *     copy ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
+        :ok
+      {:error, reason} ->
+        say_error("#{reason}")
+        {:error, reason}
+    end
+  end
 
+
+  @doc """
+  """
+  @spec link_file(Path.t, Path.t) :: :ok | {:error, Streang.t}
+  def link_file(source, link) do
+    case File.ln_s(source, link) do
+      :ok ->
+        say IO.ANSI.format [:green, " *     link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
+        :ok
+      {:error, reason} ->
+        say_error("#{reason}")
+        {:error, reason}
+    end
+  end
 end
