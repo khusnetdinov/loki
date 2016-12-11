@@ -1,7 +1,7 @@
 defmodule Loki.CmdTest do
   use ExUnit.Case, async: true
 
-  import Loki.Cmd
+  # import Loki.Cmd
 
   @tag :skip
   test "should execute command" do

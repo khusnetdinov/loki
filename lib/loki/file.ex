@@ -5,7 +5,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec create_file(Path.t) :: Boolean.t
+  @spec create_file(Path.t) :: :ok | {:error, String.t}
   def create_file(path) when is_bitstring(path), do: create_file(path, "")
 
   @doc false
@@ -17,7 +17,7 @@ defmodule Loki.File do
   def create_file(path, content) do
     case File.write(path, content, []) do
       :ok ->
-        say_create("#{path}")
+        say_create(path)
         :ok
       {:error, reason} ->
         say_error("Can't create: #{path}: #{reason}!")
@@ -32,7 +32,7 @@ defmodule Loki.File do
   def create_file_force(path, content) do
     case File.write(path, content, []) do
       :ok ->
-        say_force("#{path}")
+        say_force(path)
         :force
       {:error, reason} ->
         say_error("Can't create: #{path}: #{reason}!")
@@ -51,7 +51,7 @@ defmodule Loki.File do
      if yes?(" Do you want to force create file? [Yn] ") do
        create_file_force(path, content)
      else
-       say_skip("#{path}")
+       say_skip(path)
        :skip
      end
   end
@@ -60,7 +60,7 @@ defmodule Loki.File do
   @doc """
   """
   @spec exists_file?(Path.t) :: Boolean.t
-  def exists_file?(path) when is_bitstring(path), do: File.exists? path
+  def exists_file?(path) when is_bitstring(path), do: File.exists?(path)
 
   @doc false
   @spec exists_file?(any) :: none()
@@ -82,10 +82,10 @@ defmodule Loki.File do
   def copy_file(source, target) do
     case File.copy(source, target) do
       {:ok, _} ->
-        say IO.ANSI.format [:green, " *     copy ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
+        say_copy(source, target)
         :ok
       {:error, reason} ->
-        say_error("#{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -93,14 +93,14 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec link_file(Path.t, Path.t) :: :ok | {:error, String.t}
-  def link_file(source, link) do
+  @spec create_link(Path.t, Path.t) :: :ok | {:error, String.t}
+  def create_link(source, link) do
     case File.ln_s(source, link) do
       :ok ->
         say IO.ANSI.format [:green, " *     link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
         :ok
       {:error, reason} ->
-        say_error("#{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -112,7 +112,7 @@ defmodule Loki.File do
   def remove_file(path) do
     case File.rm(path) do
       :ok ->
-        say IO.ANSI.format [:green, " *   remove", :reset, "#{path}"]
+        say_remove(path)
         :ok
       {:error, :enoent} ->
         say_error("File does not exist: #{path}")
@@ -135,14 +135,14 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec rename_file(Path.t, Path.t) :: :ok | {:error, String.t}
-  def rename_file(source, target) do
+  @spec rename(Path.t, Path.t) :: :ok | {:error, String.t}
+  def rename(source, target) do
     case File.rename(source, target) do
       :ok ->
-        say IO.ANSI.format [:green, " *   rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
+        say_rename(source, target)
         :ok
       {:error, reason} ->
-        say_error("#{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end

@@ -27,15 +27,15 @@ defmodule Loki.Cmd do
   def execute_in_path(string, path) when is_bitstring(string) and is_bitstring(path), do: execute_in_path(string, path, [])
 
   @doc false
-  @spec execute_in_path(any) :: none()
-  def execute_in_path(_any), do: raise ArgumentError, message: "Invalid argument, accept String, Path [, List(Keyword)]!"
-
-  @doc false
   @spec execute_in_path(String.t, Path.t, list(Keyword.t)) :: none()
   def execute_in_path(string, path, opts) when is_bitstring(string) and is_bitstring(path) and is_list(opts) do
     [command | args] = String.split(string)
     System.cmd(command, args, env: opts, cd: path)
   end
+
+  @doc false
+  @spec execute_in_path(any) :: none()
+  def execute_in_path(_any), do: raise ArgumentError, message: "Invalid argument, accept String, Path [, List(Keyword)]!"
 
 
   @doc """

@@ -1,7 +1,7 @@
 defmodule Loki.ShellTest do
   use ExUnit.Case, async: true
 
-  import Loki.Shell
+  # import Loki.Shell
 
   @tag :skip
   test "asking user input" do
@@ -31,7 +31,6 @@ defmodule Loki.ShellTest do
   test "saying if identic" do
   end
 
-
   @tag :skip
   test "saying about skip" do
   end
@@ -46,5 +45,17 @@ defmodule Loki.ShellTest do
 
   @tag :skip
   test "saying exists" do
+  end
+
+  @tag :skip
+  test "saying rename" do
+  end
+
+  @tag :skip
+  test "saying copy" do
+  end
+
+  @tag :skip
+  test "remove" do
   end
 end

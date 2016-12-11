@@ -1,14 +1,18 @@
 defmodule Loki.DirectoryTest do
   use ExUnit.Case, async: true
 
-  import Loki.Directory
+  # import Loki.Directory
 
   @tag :skip
   test "should create directory" do
   end
 
   @tag :skip
-  test "should recursively copy directory" do
+  test "should check if directory exists" do
+  end
+
+  @tag :skip
+  test "should copy directory" do
   end
 
   @tag :skip
@@ -16,6 +20,6 @@ defmodule Loki.DirectoryTest do
   end
 
   @tag :skip
-  test "should check if directory exist" do
+  test "should ask for overwrite files" do
   end
 end
