@@ -10,7 +10,7 @@ defmodule Loki.File do
 
   @doc false
   @spec create_file(any) :: none()
-  def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept String, [String]!"
+  def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
   @doc false
   @spec create_file(Path.t, String.t) :: :ok | {:error, String.t}
@@ -38,6 +38,10 @@ defmodule Loki.File do
         say_error("Can't create: #{path}: #{reason}!")
     end
   end
+
+  @doc false
+  @spec create_file_force(any) :: none()
+  def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
 
   @doc """
@@ -74,7 +78,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec copy_file(Path.t, Path.t) :: :ok | {:error, Streang.t}
+  @spec copy_file(Path.t, Path.t) :: :ok | {:error, String.t}
   def copy_file(source, target) do
     case File.copy(source, target) do
       {:ok, _} ->
@@ -89,11 +93,53 @@ defmodule Loki.File do
 
   @doc """
   """
-  @spec link_file(Path.t, Path.t) :: :ok | {:error, Streang.t}
+  @spec link_file(Path.t, Path.t) :: :ok | {:error, String.t}
   def link_file(source, link) do
     case File.ln_s(source, link) do
       :ok ->
         say IO.ANSI.format [:green, " *     link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
+        :ok
+      {:error, reason} ->
+        say_error("#{reason}")
+        {:error, reason}
+    end
+  end
+
+
+  @doc """
+  """
+  @spec remove_file(Path.t) :: :ok | {:error, Atom.t}
+  def remove_file(path) do
+    case File.rm(path) do
+      :ok ->
+        say IO.ANSI.format [:green, " *   remove", :reset, "#{path}"]
+        :ok
+      {:error, :enoent} ->
+        say_error("File does not exist: #{path}")
+        {:error, :enoent}
+      {:error, :eacces} ->
+        say_error("Don't have permission for removing: #{path}")
+        {:error, :eacces}
+      {:error, :eperm} ->
+        say_error("File and user is not super-user: #{path}")
+        {:error, :eperm}
+      {:error, :enotdir} ->
+        say_error("Component of filename is not directory: #{path}")
+        {:error, :enotdir}
+      {:error, :einval} ->
+        say_error("Filename had an improper type: #{path}")
+        {:error, :einval}
+    end
+  end
+
+
+  @doc """
+  """
+  @spec rename_file(Path.t, Path.t) :: :ok | {:error, String.t}
+  def rename_file(source, target) do
+    case File.rename do
+      :ok ->
+        say IO.ANSI.format [:green, " *   rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
         :ok
       {:error, reason} ->
         say_error("#{reason}")
