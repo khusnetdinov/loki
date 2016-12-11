@@ -11,7 +11,7 @@ defmodule Loki.Cmd do
 
   @doc false
   @spec execute(any) :: none()
-  def execute(_any), do: raise ArgumentError, message:  "Invalid argument, accept String, [List]!"
+  def execute(_any), do: raise ArgumentError, message:  "Invalid argument, accept String [, List(Keyword)]!"
 
   @doc false
   @spec execute(String.t, list(Keyword.t)) :: none()
@@ -28,7 +28,7 @@ defmodule Loki.Cmd do
 
   @doc false
   @spec execute_in_path(any) :: none()
-  def execute_in_path(_any), do: raise ArgumentError, message: "Invalid argument, accept String, String, [List]!"
+  def execute_in_path(_any), do: raise ArgumentError, message: "Invalid argument, accept String, Path [, List(Keyword)]!"
 
   @doc false
   @spec execute_in_path(String.t, Path.t, list(Keyword.t)) :: none()

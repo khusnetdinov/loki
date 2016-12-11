@@ -4,10 +4,14 @@ defmodule Loki.CmdTest do
   import Loki.Cmd
 
   @tag :skip
-  test "should return path" do
+  test "should execute command" do
   end
 
   @tag :skip
-  test "should return other path" do
+  test "should execute in other path" do
+  end
+
+  @tag :skip
+  test "should format shell output" do
   end
 end
