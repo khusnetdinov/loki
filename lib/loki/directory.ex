@@ -10,7 +10,7 @@ defmodule Loki.Directory do
   def create_directory(path) when is_bitstring(path) do
     case File.mkdir_p(path) do
       :ok ->
-        say IO.ANSI.format [:green, " * creating ", :reset, "#{}"]
+        say_create("#{path}")
       {:error, :eacess} ->
         say_error("Don't have permission for removing: #{path}")
         {:error, :eacess}
@@ -52,10 +52,10 @@ defmodule Loki.Directory do
   def copy_directory(source, target, callback) when is_bitstring(source) and is_bitstring(target) do
     case File.cp_r(source, target, callback) do
       {:ok, data} ->
-        say IO.ANSI.format [:green, " *     copy", "#{source}", :green, " to ", :reset, "#{target}"]
+        say_copy(source, target)
         {:ok, data}
       {:error, reason, data} ->
-        say_error("")
+        say_error(reason)
         {:error, reason, data}
     end
   end
@@ -71,10 +71,10 @@ defmodule Loki.Directory do
   def remove_directory(path) do
     case File.rm_rf(path) do
       {:ok, data} ->
-        say IO.ANSI.format [:green, " *   remove", :reset, "#{path}"]
+        say_remove(path)
         {:ok, data}
       {:error, reason, data} ->
-        say_error("#{reason}")
+        say_error(reason)
         {:error, reason, data}
     end
   end
@@ -88,7 +88,7 @@ defmodule Loki.Directory do
     if answer do
       say IO.ANSI.format [:green, " * overwrite ", :reset, "#{target}"]
     else
-      say_skip("#{target}")
+      say_skip(target)
     end
     answer
   end
