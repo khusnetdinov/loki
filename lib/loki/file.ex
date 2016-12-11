@@ -64,7 +64,7 @@ defmodule Loki.File do
 
   @doc false
   @spec exists_file?(any) :: none()
-  def exists_file?(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
+  def exists_file?(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
   @doc """
