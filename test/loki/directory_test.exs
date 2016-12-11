@@ -1,7 +1,7 @@
 defmodule Loki.DirectoryTest do
   use ExUnit.Case, async: true
 
-  import Loki.Directory
+  # import Loki.Directory
 
   @tag :skip
   test "should create directory" do

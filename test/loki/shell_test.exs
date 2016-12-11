@@ -1,7 +1,7 @@
 defmodule Loki.ShellTest do
   use ExUnit.Case, async: true
 
-  import Loki.Shell
+  # import Loki.Shell
 
   @tag :skip
   test "asking user input" do

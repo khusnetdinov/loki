@@ -1,7 +1,7 @@
 defmodule Loki.FileTest do
   use ExUnit.Case, async: true
 
-  import Loki.File
+  # import Loki.File
 
   @tag :skip
   test "should create file" do
