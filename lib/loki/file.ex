@@ -137,7 +137,7 @@ defmodule Loki.File do
   """
   @spec rename_file(Path.t, Path.t) :: :ok | {:error, String.t}
   def rename_file(source, target) do
-    case File.rename do
+    case File.rename(source, target) do
       :ok ->
         say IO.ANSI.format [:green, " *   rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
         :ok
