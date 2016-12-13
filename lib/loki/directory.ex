@@ -80,13 +80,12 @@ defmodule Loki.Directory do
   end
 
 
-  @doc """
-  """
+  @doc false
   @spec overwritting_callback(Path.t, Path.t) :: Boolean.t
-  def overwritting_callback(source, target) do
+  defp overwritting_callback(source, target) do
     answer = yes? " Overwrite #{target} by #{source}? [Yn] "
     if answer do
-      say IO.ANSI.format [:green, " * overwrite ", :reset, "#{target}"]
+      say_force(target)
     else
       say_skip(target)
     end
