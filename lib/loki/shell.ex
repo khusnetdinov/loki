@@ -13,7 +13,7 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec ask(String.t | List.t) :: Tuple.t
+  @spec ask(String.t | List.t) :: {List.t, List.t, List.t}
   def ask(message) when is_input(message) do
     args = format(IO.gets message)
     OptionParser.parse([args])
@@ -26,7 +26,7 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec yes?(String.t | List.t) :: Boolean.t
+  @spec yes?(String.t) :: Boolean.t
   def yes?(message) when is_input(message) do
     {_, [answer], _} = ask(message)
     positive_answers = ["yes", "y"]
@@ -40,7 +40,7 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec no?(String.t | List.t) :: Boolean.t
+  @spec no?(String.t) :: Boolean.t
   def no?(message) when is_input(message) do
     {_, [answer], _} = ask(message)
     negative_answers = ["no", "n"]
@@ -54,7 +54,7 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec say(String.t | List.t) :: none()
+  @spec say(String.t) :: none()
   def say(message) when is_input(message), do: IO.puts message
 
   @doc false
@@ -65,7 +65,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_create(Path.t) :: none()
-  def say_create(message) when is_input(message), do: say IO.ANSI.format([:green, " *  creating ", :reset, message])
+  def say_create(path) when is_input(path), do: say IO.ANSI.format([:green, " *  creating ", :reset, path])
 
   @doc false
   @spec say_create(any) :: none()
@@ -75,7 +75,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_force(Path.t) :: none()
-  def say_force(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *     force ", :reset, message])
+  def say_force(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *     force ", :reset, path])
 
   @doc false
   @spec say_force(any) :: none()
@@ -84,18 +84,18 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec say_identic(Path.t) :: none()
-  def say_identic(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " * identical ", :reset, message])
+  @spec say_identical(Path.t) :: none()
+  def say_identical(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " * identical ", :reset, path])
 
   @doc false
-  @spec say_identic(any) :: none()
-  def say_identic(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
+  @spec say_identical(any) :: none()
+  def say_identical(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
   @doc """
   """
   @spec say_skip(Path.t) :: none()
-  def say_skip(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *      skip ", :reset, message])
+  def say_skip(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *      skip ", :reset, path])
 
   @doc false
   @spec say_skip(any) :: none()
@@ -115,7 +115,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_conflict(Path.t) :: none()
-  def say_conflict(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *  conflict ", :reset, message])
+  def say_conflict(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *  conflict ", :reset, path])
 
   @doc false
   @spec say_conflict(any) :: none()
@@ -125,7 +125,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_exists(Path.t) :: none()
-  def say_exists(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " *    exists ", :reset, message])
+  def say_exists(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " *    exists ", :reset, path])
 
   @doc false
   @spec say_exists(any) :: none()
