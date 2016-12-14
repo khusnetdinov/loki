@@ -1,5 +1,5 @@
 defmodule Loki.FileManipulation do
-  import Loki.Shell
+  import Loki.Shell, only: [say: 1, say_error: 1]
   import Loki.File, only: [exists_file?: 1]
 
   @moduledoc """

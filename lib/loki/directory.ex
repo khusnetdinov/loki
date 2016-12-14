@@ -1,5 +1,13 @@
 defmodule Loki.Directory do
-  import Loki.Shell
+  import Loki.Shell, only: [
+    yes?: 1,
+    say_create: 1,
+    say_error: 1,
+    say_copy: 2,
+    say_remove: 1,
+    say_force: 1,
+    say_skip: 1
+  ]
 
   @moduledoc """
   """
@@ -45,12 +53,8 @@ defmodule Loki.Directory do
 
   @doc false
   @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
-  def copy_directory(source, target), do: copy_directory(source, target, overwritting_callback: 2)
-
-  @doc false
-  @spec copy_directory(Path.t, Path.t, (Path.t, Path.t -> boolean)) :: {:ok, [binary]} | {:error, String.t, binary}
-  def copy_directory(source, target, callback) when is_bitstring(source) and is_bitstring(target) do
-    case File.cp_r(source, target, callback) do
+  def copy_directory(source, target) when is_bitstring(source) and is_bitstring(target) do
+    case File.cp_r(source, target, fn(s, t) -> overwritting_callback(s, t) end) do
       {:ok, data} ->
         say_copy(source, target)
         {:ok, data}
@@ -62,7 +66,7 @@ defmodule Loki.Directory do
 
   @doc false
   @spec copy_directory(any) :: none()
-  def copy_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path [, Callback]!"
+  def copy_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
 
 
   @doc """

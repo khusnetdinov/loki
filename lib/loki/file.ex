@@ -1,5 +1,15 @@
 defmodule Loki.File do
-  import Loki.Shell
+  import Loki.Shell, only: [
+    yes?: 1,
+    say: 1,
+    say_error: 1,
+    say_create: 1,
+    say_force: 1,
+    say_skip: 1,
+    say_copy: 2,
+    say_remove: 1,
+    say_rename: 2
+  ]
 
   @moduledoc false
 

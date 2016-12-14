@@ -1,5 +1,5 @@
 defmodule Loki.Cmd do
-  import Loki.Shell
+  import Loki.Shell, only: [say: 1]
 
   @moduledoc """
   """
@@ -17,6 +17,7 @@ defmodule Loki.Cmd do
   @spec execute(String.t, list(Keyword.t)) :: none()
   def execute(string, opts) when is_bitstring(string) and is_list(opts) do
     [command | args] = String.split(string)
+    say IO.ANSI.format [:green, " *  execute ", :reset, string]
     System.cmd(command, args, env: opts)
   end
 
@@ -30,6 +31,7 @@ defmodule Loki.Cmd do
   @spec execute_in_path(String.t, Path.t, list(Keyword.t)) :: none()
   def execute_in_path(string, path, opts) when is_bitstring(string) and is_bitstring(path) and is_list(opts) do
     [command | args] = String.split(string)
+    say IO.ANSI.format [:green, " *  execute ", :reset, string <> " in path " <> path]
     System.cmd(command, args, env: opts, cd: path)
   end
 
