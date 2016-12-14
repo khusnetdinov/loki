@@ -65,7 +65,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_create(Path.t) :: none()
-  def say_create(message) when is_input(message), do: say IO.ANSI.format([:green, " * creating ", :reset, message])
+  def say_create(message) when is_input(message), do: say IO.ANSI.format([:green, " *  creating ", :reset, message])
 
   @doc false
   @spec say_create(any) :: none()
@@ -75,7 +75,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_force(Path.t) :: none()
-  def say_force(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *    force ", :reset, message])
+  def say_force(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *     force ", :reset, message])
 
   @doc false
   @spec say_force(any) :: none()
@@ -85,7 +85,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_identic(Path.t) :: none()
-  def say_identic(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " *  identic ", :reset, message])
+  def say_identic(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " * identical ", :reset, message])
 
   @doc false
   @spec say_identic(any) :: none()
@@ -95,7 +95,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_skip(Path.t) :: none()
-  def say_skip(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *     skip ", :reset, message])
+  def say_skip(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *      skip ", :reset, message])
 
   @doc false
   @spec say_skip(any) :: none()
@@ -105,7 +105,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_error(String.t) :: none()
-  def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *    error ", :reset, message])
+  def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *     error ", :reset, message])
 
   @doc false
   @spec say_error(any) :: none()
@@ -115,7 +115,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_conflict(Path.t) :: none()
-  def say_conflict(message) when is_input(message), do: say IO.ANSI.format([:yellow, " * conflict ", :reset, message])
+  def say_conflict(message) when is_input(message), do: say IO.ANSI.format([:yellow, " *  conflict ", :reset, message])
 
   @doc false
   @spec say_conflict(any) :: none()
@@ -125,7 +125,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_exists(Path.t) :: none()
-  def say_exists(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " * existing ", :reset, message])
+  def say_exists(message) when is_input(message), do: say IO.ANSI.format([:blue, :bright, " *    exists ", :reset, message])
 
   @doc false
   @spec say_exists(any) :: none()
@@ -136,7 +136,7 @@ defmodule Loki.Shell do
   """
   @spec say_rename(Path.t, Path.t) :: none()
   def say_rename(source, target) when is_bitstring(source) and is_bitstring(target) do
-    say IO.ANSI.format [:green, " *   rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
+    say IO.ANSI.format [:green, " *    rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
   end
 
   @doc false
@@ -148,7 +148,7 @@ defmodule Loki.Shell do
   """
   @spec say_copy(Path.t, Path.t) :: none()
   def say_copy(source, target) when is_bitstring(source) and is_bitstring(target) do
-    say IO.ANSI.format [:green, " *     copy ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
+    say IO.ANSI.format [:green, " *      copy ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
   end
 
   @doc false
@@ -159,7 +159,7 @@ defmodule Loki.Shell do
   @doc """
   """
   @spec say_remove(Path.t) :: none()
-  def say_remove(path) when is_bitstring(path), do: say IO.ANSI.format [:green, " *   remove", :reset, "#{path}"]
+  def say_remove(path) when is_bitstring(path), do: say IO.ANSI.format [:green, " *    remove ", :reset, "#{path}"]
 
   @doc false
   @spec say_remove(any) :: none()

@@ -14,7 +14,7 @@ defmodule Loki.FileManipulation do
       case file do
         {:ok, file_pid} ->
           IO.write(file_pid, content)
-          say IO.ANSI.format [:green, " *   append ", :reset, path]
+          say IO.ANSI.format [:green, " *    append ", :reset, path]
           :ok
         {:error, reason} ->
           say_error(reason)
@@ -37,7 +37,7 @@ defmodule Loki.FileManipulation do
       case file do
         {:ok, file_content} ->
           File.write(path, content <> file_content)
-          say IO.ANSI.format [:green, " *  prepend ", :reset, path]
+          say IO.ANSI.format [:green, " *   prepend ", :reset, path]
           :ok
         {:error, reason} ->
           say_error(reason)
@@ -74,7 +74,7 @@ defmodule Loki.FileManipulation do
     [order, value] = state
     [head, elem, tail] = split_list(lines, value)
 
-    message = IO.ANSI.format [:green, " *   inject ", :reset, path]
+    message = IO.ANSI.format [:green, " *    inject ", :reset, path]
 
     case order do
       :before ->
@@ -101,7 +101,7 @@ defmodule Loki.FileManipulation do
     lines = read_to_list(path)
     [head, _, tail] = split_list(lines, remove)
     state = write_file(path, head ++ [content] ++ tail)
-    say IO.ANSI.format [:green, " *  replace ", :reset, path]
+    say IO.ANSI.format [:green, " *   replace ", :reset, path]
     state
   end
 

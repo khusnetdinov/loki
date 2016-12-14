@@ -107,7 +107,7 @@ defmodule Loki.File do
   def create_link(source, link) do
     case File.ln_s(source, link) do
       :ok ->
-        say IO.ANSI.format [:green, " *     link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
+        say IO.ANSI.format [:green, " *      link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
         :ok
       {:error, reason} ->
         say_error(reason)
