@@ -15,15 +15,15 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec create_file(Path.t) :: :ok | {:error, String.t}
+  @spec create_file(Path.t) :: :ok | {:error, Atom.t}
   def create_file(path) when is_bitstring(path), do: create_file(path, "")
 
   @doc false
-  # @spec create_file(any) :: none()
+  @spec create_file(any) :: none()
   def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
   @doc false
-  # @spec create_file(Path.t, String.t) :: :ok | {:error, String.t}
+  @spec create_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file(path, content) do
     say_create(path)
     File.write(path, content, [:exclusive])
@@ -32,42 +32,34 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec create_file_force(Path.t, String.t) :: :force | {:error, String.t}
+  @spec create_file_force(Path.t) :: :ok | {:error, Atom.t}
+  def create_file_force(path), do: create_file_force(path, "")
+
+  @doc false
+  @spec create_file_force(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file_force(path, content) do
     say_force(path)
     File.write(path, content, [])
   end
 
   @doc false
-  # @spec create_file_force(any) :: none()
+  @spec create_file_force(any) :: none()
   def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
 
   @doc """
   """
-  # @spec create_file_force_or_skip(Path.t, String.t) :: :force | :skip | {:error, String.t}
-  def create_file_force_or_skip(path, content) do
-     if yes?(" Do you want to force create file? [Yn] ") do
-       create_file_force(path, content)
-     else
-       say_skip(path)
-     end
-  end
-
-
-  @doc """
-  """
-  # @spec exists_file?(Path.t) :: Boolean.t
+  @spec exists_file?(Path.t) :: Boolean.t
   def exists_file?(path) when is_bitstring(path), do: File.exists?(path)
 
   @doc false
-  # @spec exists_file?(any) :: none()
+  @spec exists_file?(any) :: none()
   def exists_file?(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
   @doc """
   """
-  # @spec identical_file?(Path.t, Path.t) :: Boolean.t
+  @spec identical_file?(Path.t, Path.t) :: Boolean.t | {:error, Atom.t}
   def identical_file?(path, renderer) do
     {:ok, content} = File.read(path)
     content == renderer
@@ -76,7 +68,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec copy_file(Path.t, Path.t) :: :ok | {:error, String.t}
+  @spec copy_file(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def copy_file(source, target) do
     say_copy(source, target)
     File.copy(source, target)
@@ -85,7 +77,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec create_link(Path.t, Path.t) :: :ok | {:error, String.t}
+  @spec create_link(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def create_link(source, link) do
     say IO.ANSI.format [:green, " *      link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
     File.ln_s(source, link)
@@ -94,7 +86,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec remove_file(Path.t) :: :ok | {:error, Atom.t}
+  @spec remove_file(Path.t) :: :ok | {:error, Atom.t}
   def remove_file(path) do
     say_remove(path)
     File.rm(path)
