@@ -4,6 +4,7 @@ defmodule Loki.CmdTest do
   import Loki.Cmd
   import ExUnit.CaptureIO
 
+
   describe "Cmd" do
     test "#execute command in shell" do
       assert capture_io(fn ->

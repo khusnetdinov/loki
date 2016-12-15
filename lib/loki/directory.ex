@@ -14,24 +14,24 @@ defmodule Loki.Directory do
 
   @doc """
   """
-  # @spec create_directory(Path.t) :: :ok | {:error, String.t}
+  @spec create_directory(Path.t) :: :ok | {:error, Atom.t}
   def create_directory(path) when is_bitstring(path) do
     say_create("directory " <> path)
     File.mkdir_p(path)
   end
 
   @doc false
-  # @spec create_directory(Path.t) :: none()
+  @spec create_directory(Path.t) :: none()
   def create_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
   @doc """
   """
-  # @spec exists_directory?(Path.t) :: Boolean.t
+  @spec exists_directory?(Path.t) :: Boolean.t
   def exists_directory?(path) when is_bitstring(path), do: File.exists?(path)
 
   @doc false
-  # @spec exists_directory?(Path.t) :: none()
+  @spec exists_directory?(Path.t) :: none()
   def exists_directory?(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
