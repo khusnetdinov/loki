@@ -3,7 +3,7 @@ defmodule Loki.Mixfile do
 
   def project do
     [app: :loki,
-     version: "0.1.0",
+     version: "1.0.0",
      elixir: "~> 1.3",
      description: description(),
      package: package(),

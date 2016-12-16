@@ -10,7 +10,7 @@ Add `loki` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:loki, "~> 0.1.0"}]
+  [{:loki, "~> 1.0.0"}]
 end
 ```
 
@@ -21,7 +21,7 @@ Import all or desired module to scope:
 ```elixir
 defmodule Project do
   use Loki
-  
+
   import Loki.Shell
   import Loki.Cmd
   import Loki.Directory
@@ -29,7 +29,7 @@ defmodule Project do
   import Loki.FileManipulation
 
   ...
-  
+
 end
 ```
 
@@ -52,7 +52,7 @@ Helpers for interaction with user and printing message to shell.
  - `say_rename/2` - Printing message about rename files to shell.
  - `say_copy/2` - Printing message about copy files to shell.
  - `say_remove/1` - Printing message about removing file to shell.
- 
+
 ### Loki.Cmd
 Executing terminal commands helpers.
 
@@ -94,7 +94,7 @@ Helpers for content manipulation injecting, appending, and other.
 ## Documentation
 
   [Read hexdocs.pm](https://hexdocs.pm/loki/api-reference.html)
-  
+
 ## Contribution
 
 Clone repo, implement additional helpers, write tests and PR welcome!

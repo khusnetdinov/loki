@@ -202,15 +202,15 @@ defmodule Loki.FileManipulation do
 
   @doc false
   @spec read_to_list(Path.t) :: List.t
-  def read_to_list(path) when is_bitstring(path), do: read_to_list(File.open!(path, [:read]), path, [])
+  defp read_to_list(path) when is_bitstring(path), do: read_to_list(File.open!(path, [:read]), path, [])
 
   @doc false
   @spec read_to_list(any) :: none()
-  def read_to_list(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
+  defp read_to_list(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
   @doc false
   @spec read_to_list(iolist(), Path.t, List.t) :: List.t
-  def read_to_list(file_io, path, file_lines) when is_bitstring(path) do
+  defp read_to_list(file_io, path, file_lines) when is_bitstring(path) do
     line = IO.read(file_io, :line)
     if line != :eof do
       read_to_list(file_io, path,[remove_trailing_spaces(line) | file_lines])
