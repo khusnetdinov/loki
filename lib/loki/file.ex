@@ -95,7 +95,7 @@ defmodule Loki.File do
 
   @doc """
   """
-  # @spec rename(Path.t, Path.t) :: :ok | {:error, String.t}
+  @spec rename(Path.t, Path.t) :: :ok | {:error, String.t}
   def rename(source, target) do
     say_rename(source, target)
     File.rename(source, target)

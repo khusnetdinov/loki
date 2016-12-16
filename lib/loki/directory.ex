@@ -37,20 +37,20 @@ defmodule Loki.Directory do
 
   @doc """
   """
-  # @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
+  @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def copy_directory(source, target) when is_bitstring(source) and is_bitstring(target) do
     say_copy(source, target)
     File.cp_r(source, target)
   end
 
   @doc false
-  # @spec copy_directory(any) :: none()
+  @spec copy_directory(any) :: none()
   def copy_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
 
 
   @doc """
   """
-  # @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
+  @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def remove_directory(path) do
     say_remove(path)
     File.rm_rf(path)
