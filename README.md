@@ -10,7 +10,7 @@ Add `loki` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:loki, "~> 1.0.0"}]
+  [{:loki, "~> 1.0.1"}]
 end
 ```
 
