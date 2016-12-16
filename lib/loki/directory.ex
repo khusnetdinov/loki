@@ -18,7 +18,7 @@ defmodule Loki.Directory do
         say_create("directory " <> path)
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -47,7 +47,7 @@ defmodule Loki.Directory do
         say_copy(source, target)
         {:ok, data}
       {:error, reason, data} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason, data}
     end
   end
@@ -67,7 +67,7 @@ defmodule Loki.Directory do
         say_remove(path)
         {:ok, data}
       {:error, reason, data} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason, data}
     end
   end

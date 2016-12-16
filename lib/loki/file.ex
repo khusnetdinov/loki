@@ -28,7 +28,7 @@ defmodule Loki.File do
         say_create(path)
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -40,6 +40,10 @@ defmodule Loki.File do
   def create_file_force(path), do: create_file_force(path, "")
 
   @doc false
+  @spec create_file_force(any) :: none()
+  def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
+
+  @doc false
   @spec create_file_force(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file_force(path, content) do
     case File.write(path, content, []) do
@@ -47,14 +51,10 @@ defmodule Loki.File do
         say_force(path)
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
-
-  @doc false
-  @spec create_file_force(any) :: none()
-  def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
 
   @doc """
@@ -85,7 +85,7 @@ defmodule Loki.File do
         say_copy(source, target)
         {:ok, status}
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -100,7 +100,7 @@ defmodule Loki.File do
         say IO.ANSI.format [:green, " *      link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -115,7 +115,7 @@ defmodule Loki.File do
         say_remove(path)
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -130,7 +130,7 @@ defmodule Loki.File do
         say_rename(source, target)
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end

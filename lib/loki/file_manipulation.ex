@@ -64,7 +64,7 @@ defmodule Loki.FileManipulation do
         say_remove(path)
           :ok
         {:error, reason} ->
-          say_error("reason: #{reason}")
+          say_error(reason)
           {:error, reason}
       end
     end)
@@ -92,7 +92,7 @@ defmodule Loki.FileManipulation do
             say message
             :ok
           {:error, reason} ->
-            say_error("reason: #{message}")
+            say_error(reason)
             {:error, reason}
         end
       :after ->
@@ -101,7 +101,7 @@ defmodule Loki.FileManipulation do
             say message
             :ok
           {:error, reason} ->
-            say_error("reason: #{message}")
+            say_error(reason)
             {:error, reason}
         end
         _ ->
@@ -125,7 +125,7 @@ defmodule Loki.FileManipulation do
         say IO.ANSI.format [:green, " *   replace ", :reset, path]
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -147,7 +147,7 @@ defmodule Loki.FileManipulation do
         say IO.ANSI.format [:green, " *  comment ", :reset, path]
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -169,7 +169,7 @@ defmodule Loki.FileManipulation do
         say IO.ANSI.format [:green, " * uncomment ", :reset, path]
         :ok
       {:error, reason} ->
-        say_error("reason: #{reason}")
+        say_error(reason)
         {:error, reason}
     end
   end
@@ -221,7 +221,7 @@ defmodule Loki.FileManipulation do
     if exists_file?(path) do
       callback.()
     else
-      say_error("File doesn't exists: #{path}")
+      say_error(:eexist)
       {:error, :eexist}
     end
   end
