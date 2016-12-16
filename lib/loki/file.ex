@@ -1,11 +1,9 @@
 defmodule Loki.File do
   import Loki.Shell, only: [
-    yes?: 1,
     say: 1,
     say_error: 1,
     say_create: 1,
     say_force: 1,
-    say_skip: 1,
     say_copy: 2,
     say_remove: 1,
     say_rename: 2
@@ -25,8 +23,14 @@ defmodule Loki.File do
   @doc false
   @spec create_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file(path, content) do
-    say_create(path)
-    File.write(path, content, [:exclusive])
+    case File.write(path, content, [:exclusive]) do
+      :ok ->
+        say_create(path)
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 
 
@@ -36,15 +40,21 @@ defmodule Loki.File do
   def create_file_force(path), do: create_file_force(path, "")
 
   @doc false
-  @spec create_file_force(Path.t, String.t) :: :ok | {:error, Atom.t}
-  def create_file_force(path, content) do
-    say_force(path)
-    File.write(path, content, [])
-  end
-
-  @doc false
   @spec create_file_force(any) :: none()
   def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
+
+  @doc false
+  @spec create_file_force(Path.t, String.t) :: :ok | {:error, Atom.t}
+  def create_file_force(path, content) do
+    case File.write(path, content, []) do
+      :ok ->
+        say_force(path)
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
+  end
 
 
   @doc """
@@ -70,8 +80,14 @@ defmodule Loki.File do
   """
   @spec copy_file(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def copy_file(source, target) do
-    say_copy(source, target)
-    File.copy(source, target)
+    case File.copy(source, target) do
+      {:ok, status} ->
+        say_copy(source, target)
+        {:ok, status}
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 
 
@@ -79,8 +95,14 @@ defmodule Loki.File do
   """
   @spec create_link(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def create_link(source, link) do
-    say IO.ANSI.format [:green, " *      link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
-    File.ln_s(source, link)
+    case File.ln_s(source, link) do
+      :ok ->
+        say IO.ANSI.format [:green, " *      link ", :reset, "#{source}", :green, " to ", :reset, "#{link}"]
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 
 
@@ -88,8 +110,14 @@ defmodule Loki.File do
   """
   @spec remove_file(Path.t) :: :ok | {:error, Atom.t}
   def remove_file(path) do
-    say_remove(path)
-    File.rm(path)
+    case File.rm(path) do
+      :ok ->
+        say_remove(path)
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 
 
@@ -97,7 +125,13 @@ defmodule Loki.File do
   """
   @spec rename(Path.t, Path.t) :: :ok | {:error, String.t}
   def rename(source, target) do
-    say_rename(source, target)
-    File.rename(source, target)
+    case File.rename(source, target) do
+      :ok ->
+        say_rename(source, target)
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 end

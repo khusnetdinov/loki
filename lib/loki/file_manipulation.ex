@@ -59,8 +59,14 @@ defmodule Loki.FileManipulation do
   def remove_from_file(path, content) when is_bitstring(path) do
     edit_exists_file(path, fn ->
       lines = List.delete(read_to_list(path), content)
-      say_remove(path)
-      write_file(path, lines)
+      case write_file(path, lines) do
+        :ok ->
+        say_remove(path)
+          :ok
+        {:error, reason} ->
+          say_error(reason)
+          {:error, reason}
+      end
     end)
   end
 
@@ -73,18 +79,36 @@ defmodule Loki.FileManipulation do
   """
   @spec inject_into_file(String.t, String.t, any) :: :ok | {:error, Atom.t}
   def inject_into_file(path, injection, state) when is_bitstring(path) do
-    lines = read_to_list(path)
     [order, value] = state
-    [head, elem, tail] = split_list(lines, value)
-    say = IO.ANSI.format [:green, " *    inject ", :reset, path]
+    case split_list(read_to_list(path), value) do
+      {:ok, head, elem, tail} ->
+        message = IO.ANSI.format [:green, " *    inject ", :reset, path]
 
-    case order do
-      :before ->
-        write_file(path, head ++ [injection] ++ [elem] ++ tail)
-      :after ->
-        write_file(path, head ++ [elem] ++ [injection] ++ tail)
-      _ ->
-        {:error, :eopts}
+        case order do
+          :before ->
+            case write_file(path, head ++ [injection] ++ [elem] ++ tail) do
+              :ok ->
+                say message
+                :ok
+              {:error, reason} ->
+                say_error(reason)
+                {:error, reason}
+            end
+          :after ->
+            case write_file(path, head ++ [elem] ++ [injection] ++ tail) do
+              :ok ->
+                say message
+                :ok
+              {:error, reason} ->
+                say_error(reason)
+                {:error, reason}
+            end
+            _ ->
+              {:error, :eopts}
+          end
+      {:error, _} ->
+        say_error(:enofnd)
+        {:error, :enofnd}
     end
   end
 
@@ -97,11 +121,20 @@ defmodule Loki.FileManipulation do
   """
   @spec replace_in_file(String.t, String.t, String.t) :: :ok | {:error, Atom.t}
   def replace_in_file(path, content, remove) when is_bitstring(path) do
-    lines = read_to_list(path)
-    [head, _, tail] = split_list(lines, remove)
-    state = write_file(path, head ++ [content] ++ tail)
-    say IO.ANSI.format [:green, " *   replace ", :reset, path]
-    state
+    case split_list(read_to_list(path), remove) do
+      {:ok, head, _, tail} ->
+        case write_file(path, head ++ [content] ++ tail) do
+          :ok ->
+            say IO.ANSI.format [:green, " *   replace ", :reset, path]
+            :ok
+          {:error, reason} ->
+            say_error(reason)
+            {:error, reason}
+        end
+      {:error, _} ->
+        say_error(:enofnd)
+        {:error, :enofnd}
+    end
   end
 
   @doc false
@@ -113,11 +146,20 @@ defmodule Loki.FileManipulation do
   """
   @spec comment_in_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def comment_in_file(path, content) do
-    lines = read_to_list(path)
-    [head, _, tail] = split_list(lines, content)
-    state = write_file(path, head ++ ["# #{content}"] ++ tail)
-    say IO.ANSI.format [:green, " *  comment ", :reset, path]
-    state
+    case split_list(read_to_list(path), content) do
+      {:ok, head, _, tail} ->
+        case write_file(path, head ++ ["# #{content}"] ++ tail) do
+          :ok ->
+            say IO.ANSI.format [:green, " *  comment ", :reset, path]
+            :ok
+          {:error, reason} ->
+            say_error(reason)
+            {:error, reason}
+        end
+      {:error, _} ->
+        say_error(:enofnd)
+        {:error, :enofnd}
+    end
   end
 
   @doc false
@@ -129,11 +171,20 @@ defmodule Loki.FileManipulation do
   """
   @spec uncomment_in_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def uncomment_in_file(path, content) do
-    lines = read_to_list(path)
-    [head, _, tail] = split_list(lines, content)
-    state = write_file(path, head ++ [String.replace(content, "# ", "")] ++ tail)
-    say IO.ANSI.format [:green, " * uncomment ", :reset, path]
-    state
+    case split_list(read_to_list(path), content) do
+      {:ok, head, _, tail} ->
+        case write_file(path, head ++ [String.replace(content, "# ", "")] ++ tail) do
+          :ok ->
+            say IO.ANSI.format [:green, " * uncomment ", :reset, path]
+            :ok
+          {:error, reason} ->
+            say_error(reason)
+            {:error, reason}
+        end
+      {:error, _} ->
+        say_error(:enofnd)
+        {:error, :enofnd}
+    end
   end
 
   @doc false
@@ -170,11 +221,15 @@ defmodule Loki.FileManipulation do
   @spec split_list(List.t, String.t, List.t) :: List.t
   defp split_list(head_list, value, [elem | tail_list]) do
     if value == elem do
-      [head_list, elem, tail_list]
+      {:ok, head_list, elem, tail_list}
     else
       split_list(head_list ++ [elem], value, tail_list)
     end
   end
+
+  @doc false
+  @spec split_list(List.t, String.t, List.t) :: List.t
+  defp split_list(head_list, _, []), do: {:error, head_list}
 
 
   @doc false
@@ -183,7 +238,7 @@ defmodule Loki.FileManipulation do
     if exists_file?(path) do
       callback.()
     else
-      say_error("File doesn't exists: #{path}")
+      say_error(:eexist)
       {:error, :eexist}
     end
   end

@@ -1,12 +1,9 @@
 defmodule Loki.Directory do
   import Loki.Shell, only: [
-    yes?: 1,
     say_create: 1,
     say_error: 1,
     say_copy: 2,
     say_remove: 1,
-    say_force: 1,
-    say_skip: 1
   ]
 
   @moduledoc """
@@ -16,8 +13,14 @@ defmodule Loki.Directory do
   """
   @spec create_directory(Path.t) :: :ok | {:error, Atom.t}
   def create_directory(path) when is_bitstring(path) do
-    say_create("directory " <> path)
-    File.mkdir_p(path)
+    case File.mkdir_p(path) do
+      :ok ->
+        say_create("directory " <> path)
+        :ok
+      {:error, reason} ->
+        say_error(reason)
+        {:error, reason}
+    end
   end
 
   @doc false
@@ -39,8 +42,14 @@ defmodule Loki.Directory do
   """
   @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def copy_directory(source, target) when is_bitstring(source) and is_bitstring(target) do
-    say_copy(source, target)
-    File.cp_r(source, target)
+    case File.cp_r(source, target) do
+      {:ok, data} ->
+        say_copy(source, target)
+        {:ok, data}
+      {:error, reason, data} ->
+        say_error(reason)
+        {:error, reason, data}
+    end
   end
 
   @doc false
@@ -53,6 +62,13 @@ defmodule Loki.Directory do
   @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def remove_directory(path) do
     say_remove(path)
-    File.rm_rf(path)
+    case File.rm_rf(path) do
+      {:ok, data} ->
+        say_remove(path)
+        {:ok, data}
+      {:error, reason, data} ->
+        say_error(reason)
+        {:error, reason, data}
+    end
   end
 end

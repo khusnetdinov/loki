@@ -104,7 +104,7 @@ defmodule Loki.Shell do
 
   @doc """
   """
-  @spec say_error(String.t) :: none()
+  @spec say_error(String.t | Atom.t) :: none()
   def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *     error ", :reset, message])
 
   @doc false
