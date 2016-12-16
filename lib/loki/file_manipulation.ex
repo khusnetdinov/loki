@@ -7,9 +7,11 @@ defmodule Loki.FileManipulation do
   import Loki.File, only: [exists_file?: 1]
 
   @moduledoc """
+  Helpers for content manipulation injecting, appending, and other.
   """
 
   @doc """
+  Helper appends lines to file.
   """
   @spec append_to_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def append_to_file(path, content) when is_bitstring(path) do
@@ -32,6 +34,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper prepends lines to file.
   """
   @spec prepend_to_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def prepend_to_file(path, content) when is_bitstring(path) do
@@ -54,6 +57,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper removes lines from file.
   """
   @spec remove_from_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def remove_from_file(path, content) when is_bitstring(path) do
@@ -76,6 +80,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper injecting lines to file with `before` and `after` options.
   """
   @spec inject_into_file(String.t, String.t, any) :: :ok | {:error, Atom.t}
   def inject_into_file(path, injection, state) when is_bitstring(path) do
@@ -118,6 +123,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper replaces lines in file.
   """
   @spec replace_in_file(String.t, String.t, String.t) :: :ok | {:error, Atom.t}
   def replace_in_file(path, content, remove) when is_bitstring(path) do
@@ -143,6 +149,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper comments line in file.
   """
   @spec comment_in_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def comment_in_file(path, content) do
@@ -168,6 +175,7 @@ defmodule Loki.FileManipulation do
 
 
   @doc """
+  Helper uncomments lines in file.
   """
   @spec uncomment_in_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def uncomment_in_file(path, content) do

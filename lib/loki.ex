@@ -1,8 +1,23 @@
 defmodule Loki do
   @moduledoc """
+  Loki provide additional helpers for building command line application without running additional process.
+
+  It includes:
+
+    * `Loki.Shell` - Helpers for interaction with user and printing message to shell.
+
+    * `Loki.Cmd`   - Executing terminal commands helpers.
+
+    * `Loki.Directory` - Working with folders helpers.
+
+    * `Loki.File` - Helpers for working with files.
+
+    * `Loki.FileManipulation` - Helpers for content manipulation injecting, apeending and other.
+
   """
 
   @doc """
+  Imports all aveliable modules
   """
 
   def __using__() do

@@ -1,9 +1,9 @@
 defmodule Loki.Shell do
   @moduledoc """
+  Helpers for interaction with user and printing message to shell.
   """
 
-  @doc """
-  """
+  @doc false
   defmacro is_input(input) do
     quote do
       is_bitstring(unquote(input)) or is_list(unquote(input))
@@ -12,6 +12,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Ask user input with given message. Returns tuple with parsed options.
   """
   @spec ask(String.t | List.t) :: {List.t, List.t, List.t}
   def ask(message) when is_input(message) do
@@ -25,6 +26,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Ask about positive user input with given message.
   """
   @spec yes?(String.t) :: Boolean.t
   def yes?(message) when is_input(message) do
@@ -39,6 +41,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Ask about negative user input with given message.
   """
   @spec no?(String.t) :: Boolean.t
   def no?(message) when is_input(message) do
@@ -53,6 +56,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message to shell.
   """
   @spec say(String.t) :: none()
   def say(message) when is_input(message), do: IO.puts message
@@ -63,6 +67,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about create file to shell.
   """
   @spec say_create(Path.t) :: none()
   def say_create(path) when is_input(path), do: say IO.ANSI.format([:green, " *  creating ", :reset, path])
@@ -73,6 +78,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about force action to shell.
   """
   @spec say_force(Path.t) :: none()
   def say_force(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *     force ", :reset, path])
@@ -83,6 +89,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about identical files content to shell.
   """
   @spec say_identical(Path.t) :: none()
   def say_identical(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " * identical ", :reset, path])
@@ -93,6 +100,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about skipping action to shell.
   """
   @spec say_skip(Path.t) :: none()
   def say_skip(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *      skip ", :reset, path])
@@ -103,6 +111,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about to shell.
   """
   @spec say_error(String.t | Atom.t) :: none()
   def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *     error ", :reset, message])
@@ -113,6 +122,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about conflict to shell.
   """
   @spec say_conflict(Path.t) :: none()
   def say_conflict(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *  conflict ", :reset, path])
@@ -123,6 +133,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about existance to shell.
   """
   @spec say_exists(Path.t) :: none()
   def say_exists(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " *    exists ", :reset, path])
@@ -133,6 +144,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about rename files to shell.
   """
   @spec say_rename(Path.t, Path.t) :: none()
   def say_rename(source, target) when is_bitstring(source) and is_bitstring(target) do
@@ -145,6 +157,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about copy files to shell.
   """
   @spec say_copy(Path.t, Path.t) :: none()
   def say_copy(source, target) when is_bitstring(source) and is_bitstring(target) do
@@ -157,6 +170,7 @@ defmodule Loki.Shell do
 
 
   @doc """
+  Printing message about removing file to shell.
   """
   @spec say_remove(Path.t) :: none()
   def say_remove(path) when is_bitstring(path), do: say IO.ANSI.format [:green, " *    remove ", :reset, "#{path}"]
