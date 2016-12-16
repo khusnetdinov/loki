@@ -1,5 +1,5 @@
 defmodule Loki.DirectoryTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
 
   import Loki.Directory
   import ExUnit.CaptureIO
@@ -17,14 +17,18 @@ defmodule Loki.DirectoryTest do
     end
 
     test "#copy_directory" do
+      capture_io(fn -> create_directory("temp/copy_dir") end)
+
       assert capture_io(fn ->
-        copy_directory("temp/test", "temp/copy")
-      end) == "\e[32m *      copy \e[0mtemp/test\e[32m to \e[0mtemp/copy\e[0m\n"
+        copy_directory("temp/copy_dir", "temp/copied_dir")
+      end) == "\e[32m *      copy \e[0mtemp/copy_dir\e[32m to \e[0mtemp/copied_dir\e[0m\n"
     end
 
     test "#remove_directory" do
+      capture_io(fn -> create_directory("temp/remove") end)
+
       assert capture_io(fn ->
-        remove_directory("temp/copy")
+        remove_directory("temp/remove")
       end)
     end
   end

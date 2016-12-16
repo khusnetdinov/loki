@@ -59,8 +59,14 @@ defmodule Loki.FileManipulation do
   def remove_from_file(path, content) when is_bitstring(path) do
     edit_exists_file(path, fn ->
       lines = List.delete(read_to_list(path), content)
-      say_remove(path)
-      write_file(path, lines)
+      case write_file(path, lines) do
+        :ok ->
+        say_remove(path)
+          :ok
+        {:error, reason} ->
+          say_error("reason: #{reason}")
+          {:error, reason}
+      end
     end)
   end
 
@@ -76,16 +82,31 @@ defmodule Loki.FileManipulation do
     lines = read_to_list(path)
     [order, value] = state
     [head, elem, tail] = split_list(lines, value)
-    say = IO.ANSI.format [:green, " *    inject ", :reset, path]
+
+    message = IO.ANSI.format [:green, " *    inject ", :reset, path]
 
     case order do
       :before ->
-        write_file(path, head ++ [injection] ++ [elem] ++ tail)
+        case write_file(path, head ++ [injection] ++ [elem] ++ tail) do
+          :ok ->
+            say message
+            :ok
+          {:error, reason} ->
+            say_error("reason: #{message}")
+            {:error, reason}
+        end
       :after ->
-        write_file(path, head ++ [elem] ++ [injection] ++ tail)
-      _ ->
-        {:error, :eopts}
-    end
+        case write_file(path, head ++ [elem] ++ [injection] ++ tail) do
+          :ok ->
+            say message
+            :ok
+          {:error, reason} ->
+            say_error("reason: #{message}")
+            {:error, reason}
+        end
+        _ ->
+          {:error, :eopts}
+      end
   end
 
   @doc false
@@ -99,9 +120,14 @@ defmodule Loki.FileManipulation do
   def replace_in_file(path, content, remove) when is_bitstring(path) do
     lines = read_to_list(path)
     [head, _, tail] = split_list(lines, remove)
-    state = write_file(path, head ++ [content] ++ tail)
-    say IO.ANSI.format [:green, " *   replace ", :reset, path]
-    state
+    case write_file(path, head ++ [content] ++ tail) do
+      :ok ->
+        say IO.ANSI.format [:green, " *   replace ", :reset, path]
+        :ok
+      {:error, reason} ->
+        say_error("reason: #{reason}")
+        {:error, reason}
+    end
   end
 
   @doc false
@@ -115,9 +141,15 @@ defmodule Loki.FileManipulation do
   def comment_in_file(path, content) do
     lines = read_to_list(path)
     [head, _, tail] = split_list(lines, content)
-    state = write_file(path, head ++ ["# #{content}"] ++ tail)
-    say IO.ANSI.format [:green, " *  comment ", :reset, path]
-    state
+
+    case write_file(path, head ++ ["# #{content}"] ++ tail) do
+      :ok ->
+        say IO.ANSI.format [:green, " *  comment ", :reset, path]
+        :ok
+      {:error, reason} ->
+        say_error("reason: #{reason}")
+        {:error, reason}
+    end
   end
 
   @doc false
@@ -131,9 +163,15 @@ defmodule Loki.FileManipulation do
   def uncomment_in_file(path, content) do
     lines = read_to_list(path)
     [head, _, tail] = split_list(lines, content)
-    state = write_file(path, head ++ [String.replace(content, "# ", "")] ++ tail)
-    say IO.ANSI.format [:green, " * uncomment ", :reset, path]
-    state
+
+    case write_file(path, head ++ [String.replace(content, "# ", "")] ++ tail) do
+      :ok ->
+        say IO.ANSI.format [:green, " * uncomment ", :reset, path]
+        :ok
+      {:error, reason} ->
+        say_error("reason: #{reason}")
+        {:error, reason}
+    end
   end
 
   @doc false
