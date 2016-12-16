@@ -41,7 +41,7 @@ defmodule Loki.File do
   Helper for create file in force mode.
   """
   @spec create_file_force(Path.t) :: :ok | {:error, Atom.t}
-  def create_file_force(path), do: create_file_force(path, "")
+  def create_file_force(path) when is_bitstring(path), do: create_file_force(path, "")
 
   @doc false
   @spec create_file_force(any) :: none()
