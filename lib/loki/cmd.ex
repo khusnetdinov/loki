@@ -2,9 +2,11 @@ defmodule Loki.Cmd do
   import Loki.Shell, only: [say: 1]
 
   @moduledoc """
+  Executing terminal commands helpers.
   """
 
   @doc """
+  Execute shell command with Env variables as options.
   """
   @spec execute(String.t) :: {Collectable.t, exit_status :: non_neg_integer}
   def execute(string) when is_bitstring(string), do: execute(string, [])
@@ -23,6 +25,7 @@ defmodule Loki.Cmd do
 
 
   @doc """
+  Execute shell command with Env variables as options in given path.
   """
   @spec execute_in_path(String.t, Path.t) :: {Collectable.t, exit_status :: non_neg_integer}
   def execute_in_path(string, path) when is_bitstring(string) and is_bitstring(path), do: execute_in_path(string, path, [])
@@ -41,6 +44,7 @@ defmodule Loki.Cmd do
 
 
   @doc """
+  Format execution output for reading in shell.
   """
   @spec format_output(Tuple.t) :: String.t
   def format_output({output, _}) do

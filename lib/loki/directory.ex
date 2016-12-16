@@ -7,9 +7,11 @@ defmodule Loki.Directory do
   ]
 
   @moduledoc """
+  Working with folders helpers.
   """
 
   @doc """
+  Helper for create directory.
   """
   @spec create_directory(Path.t) :: :ok | {:error, Atom.t}
   def create_directory(path) when is_bitstring(path) do
@@ -29,6 +31,7 @@ defmodule Loki.Directory do
 
 
   @doc """
+  Helper for checking if file exists.
   """
   @spec exists_directory?(Path.t) :: Boolean.t
   def exists_directory?(path) when is_bitstring(path), do: File.exists?(path)
@@ -39,6 +42,7 @@ defmodule Loki.Directory do
 
 
   @doc """
+  Helper for copy directory.
   """
   @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def copy_directory(source, target) when is_bitstring(source) and is_bitstring(target) do
@@ -58,6 +62,7 @@ defmodule Loki.Directory do
 
 
   @doc """
+  Helper for remove directory.
   """
   @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def remove_directory(path) do

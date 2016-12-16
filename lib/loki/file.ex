@@ -9,9 +9,12 @@ defmodule Loki.File do
     say_rename: 2
   ]
 
-  @moduledoc false
+  @moduledoc """
+  Helpers for working with file.
+  """
 
   @doc """
+  Helper for create file.
   """
   @spec create_file(Path.t) :: :ok | {:error, Atom.t}
   def create_file(path) when is_bitstring(path), do: create_file(path, "")
@@ -35,6 +38,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper for create file in force mode.
   """
   @spec create_file_force(Path.t) :: :ok | {:error, Atom.t}
   def create_file_force(path), do: create_file_force(path, "")
@@ -58,6 +62,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper check if file exists.
   """
   @spec exists_file?(Path.t) :: Boolean.t
   def exists_file?(path) when is_bitstring(path), do: File.exists?(path)
@@ -68,6 +73,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper check if file identical.
   """
   @spec identical_file?(Path.t, Path.t) :: Boolean.t | {:error, Atom.t}
   def identical_file?(path, renderer) do
@@ -77,6 +83,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper for copy files.
   """
   @spec copy_file(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def copy_file(source, target) do
@@ -92,6 +99,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper for create link.
   """
   @spec create_link(Path.t, Path.t) :: :ok | {:error, Atom.t}
   def create_link(source, link) do
@@ -107,6 +115,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper for remove file.
   """
   @spec remove_file(Path.t) :: :ok | {:error, Atom.t}
   def remove_file(path) do
@@ -122,6 +131,7 @@ defmodule Loki.File do
 
 
   @doc """
+  Helper for rename files and dirs.
   """
   @spec rename(Path.t, Path.t) :: :ok | {:error, String.t}
   def rename(source, target) do
