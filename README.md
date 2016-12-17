@@ -4,6 +4,10 @@ Loki is a toolkit for building powerful command-line interfaces.
 
 ![img](http://res.cloudinary.com/dtoqqxqjv/image/upload/v1481907831/loki.jpg)
 
+## Example
+
+![img](http://res.cloudinary.com/dtoqqxqjv/image/upload/c_scale,w_469/v1481959955/1._khusnetdinov_khusnetdinov_Desktop_project_zsh_2016-12-17_09-51-12_rdjqni.png)
+
 ## Instalation
 
 Add `loki` to your list of dependencies in `mix.exs`:
