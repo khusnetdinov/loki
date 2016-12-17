@@ -23,7 +23,7 @@ defmodule Loki.Mixfile do
   defp package do
     [
       name: :loki,
-      files: ["lib", "test", "README*", "LICENSE*"],
+      files: ~w{"lib"} ++ ~w{"mix.exs", README*", "LICENSE*"},
       maintainers: ["Marat Khusnetdinov"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/khusnetdinov/loki"}
