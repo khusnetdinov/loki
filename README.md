@@ -1,4 +1,4 @@
-# Loki [![Code Triagers Badge](https://www.codetriage.com/khusnetdinov/loki/badges/users.svg)](https://www.codetriage.com/khusnetdinov/loki) [![Build Status](https://travis-ci.org/khusnetdinov/loki.svg?branch=master)](https://travis-ci.org/khusnetdinov/loki) [![Hex.pm](https://img.shields.io/hexpm/v/plug.svg)](https://hex.pm/packages/loki)
+# Loki [![Code Triagers Badge](https://www.codetriage.com/khusnetdinov/loki/badges/users.svg)](https://www.codetriage.com/khusnetdinov/loki) [![Build Status](https://travis-ci.org/khusnetdinov/loki.svg?branch=master)](https://travis-ci.org/khusnetdinov/loki) [![Hex.pm](https://img.shields.io/hexpm/v/plug.svg)](https://hex.pm/packages/loki) [![Ebert](https://ebertapp.io/github/khusnetdinov/loki.svg)](https://ebertapp.io/github/khusnetdinov/loki)
 
 Loki is a toolkit for building powerful command-line interfaces.
 
