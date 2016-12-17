@@ -3,7 +3,7 @@ defmodule Loki.Mixfile do
 
   def project do
     [app: :loki,
-     version: "1.0.1",
+     version: "1.1.0",
      elixir: "~> 1.3",
      description: description(),
      package: package(),
@@ -23,7 +23,8 @@ defmodule Loki.Mixfile do
   defp package do
     [
       name: :loki,
-      files: ~w{"lib"} ++ ~w{"mix.exs", README*", "LICENSE*"},
+      files: ~w{lib} ++
+             ~w{mix.exs README.md LICENSE},
       maintainers: ["Marat Khusnetdinov"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/khusnetdinov/loki"}
