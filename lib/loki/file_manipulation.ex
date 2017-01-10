@@ -30,7 +30,6 @@ defmodule Loki.FileManipulation do
     end)
   end
 
-  @doc false
   @spec append_to_file(any) :: none()
   def append_to_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
@@ -53,7 +52,6 @@ defmodule Loki.FileManipulation do
     end)
   end
 
-  @doc false
   @spec prepend_to_file(any) :: none()
   def prepend_to_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
@@ -76,7 +74,6 @@ defmodule Loki.FileManipulation do
     end)
   end
 
-  @doc false
   @spec remove_from_file(any) :: none()
   def remove_from_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
@@ -119,7 +116,6 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec inject_into_file(any) :: none()
   def inject_into_file(_any), do: raise ArgumentError, message: "Invalid argumtn, accept String, String, Keyword!"
 
@@ -145,7 +141,6 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec replace_in_file(any) :: none()
   def replace_in_file(_any), do: raise ArgumentError, message: "Invalid argument, accpet String, String, String!"
 
@@ -171,7 +166,6 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec comment_in_file(any) :: none()
   def comment_in_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
@@ -197,20 +191,16 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec uncomment_in_file(any) :: none()
   def uncomment_in_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
 
-  @doc false
   @spec read_to_list(Path.t) :: List.t
   defp read_to_list(path) when is_bitstring(path), do: read_to_list(File.open!(path, [:read]), path, [])
 
-  @doc false
   @spec read_to_list(any) :: none()
   defp read_to_list(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
-  @doc false
   @spec read_to_list(iolist(), Path.t, List.t) :: List.t
   defp read_to_list(file_io, path, file_lines) when is_bitstring(path) do
     line = IO.read(file_io, :line)
@@ -223,11 +213,9 @@ defmodule Loki.FileManipulation do
   end
 
 
-  @doc false
   @spec split_list(List.t, String.t) :: List.t | none()
   defp split_list(list, value), do: split_list([], value, list)
 
-  @doc false
   @spec split_list(List.t, String.t, List.t) :: List.t
   defp split_list(head_list, value, [elem | tail_list]) do
     if value == elem do
@@ -237,12 +225,10 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec split_list(List.t, String.t, List.t) :: List.t
   defp split_list(head_list, _, []), do: {:error, head_list}
 
 
-  @doc false
   @spec edit_exists_file(Path.t, (Path.t, Path.t -> {:ok, Pid.t} | {:error, Atom.t})) :: {:ok, Pid.t} | {:error, Atom.t}
   defp edit_exists_file(path, callback) when is_bitstring(path) do
     if exists_file?(path) do
@@ -253,14 +239,12 @@ defmodule Loki.FileManipulation do
     end
   end
 
-  @doc false
   @spec write_file(Path.t, List.t) :: :ok | {:error, Atom.t}
   defp write_file(path, lines) when is_bitstring(path) do
     new_file_string = Enum.join(lines, "\n")
     File.write(path, new_file_string, [])
   end
 
-  @doc false
   @spec remove_trailing_spaces(String.t) :: String.t
   defp remove_trailing_spaces(string) do
     Regex.replace(~r/\r?\n\z|\r\z/, string, "", [{:global, false}])

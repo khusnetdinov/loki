@@ -6,7 +6,6 @@ defmodule Loki.Shell do
   """
 
 
-  @doc false
   defmacro is_input(input) do
     quote do
       is_bitstring(unquote(input)) or is_list(unquote(input))
@@ -23,7 +22,6 @@ defmodule Loki.Shell do
     OptionParser.parse([args])
   end
 
-  @doc false
   @spec ask(any) :: none()
   def ask(_any), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
 
@@ -38,7 +36,6 @@ defmodule Loki.Shell do
     Enum.member? positive_answers, format(answer)
   end
 
-  @doc false
   @spec yes?(any) :: none()
   def yes?(_any), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
 
@@ -53,7 +50,6 @@ defmodule Loki.Shell do
     Enum.member? negative_answers, format(answer)
   end
 
-  @doc false
   @spec no?(any) :: none()
   def no?(_any), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
 
@@ -64,7 +60,6 @@ defmodule Loki.Shell do
   @spec say(String.t) :: none()
   def say(message) when is_input(message), do: IO.puts message
 
-  @doc false
   @spec say(any) :: none()
   def say(_any), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
 
@@ -75,7 +70,6 @@ defmodule Loki.Shell do
   @spec say_create(Path.t) :: none()
   def say_create(path) when is_input(path), do: say IO.ANSI.format([:green, " *  creating ", :reset, path])
 
-  @doc false
   @spec say_create(any) :: none()
   def say_create(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -86,7 +80,6 @@ defmodule Loki.Shell do
   @spec say_force(Path.t) :: none()
   def say_force(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *     force ", :reset, path])
 
-  @doc false
   @spec say_force(any) :: none()
   def say_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -97,7 +90,6 @@ defmodule Loki.Shell do
   @spec say_identical(Path.t) :: none()
   def say_identical(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " * identical ", :reset, path])
 
-  @doc false
   @spec say_identical(any) :: none()
   def say_identical(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -108,7 +100,6 @@ defmodule Loki.Shell do
   @spec say_skip(Path.t) :: none()
   def say_skip(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *      skip ", :reset, path])
 
-  @doc false
   @spec say_skip(any) :: none()
   def say_skip(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -119,7 +110,6 @@ defmodule Loki.Shell do
   @spec say_error(String.t | Atom.t) :: none()
   def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *     error ", :reset, message])
 
-  @doc false
   @spec say_error(any) :: none()
   def say_error(_any), do: raise ArgumentError, message: "Invalid argument, accept String!"
 
@@ -130,7 +120,6 @@ defmodule Loki.Shell do
   @spec say_conflict(Path.t) :: none()
   def say_conflict(path) when is_input(path), do: say IO.ANSI.format([:yellow, " *  conflict ", :reset, path])
 
-  @doc false
   @spec say_conflict(any) :: none()
   def say_conflict(_any), do: raise ArgumentError, message: "Invalid argument, accept Path"
 
@@ -141,7 +130,6 @@ defmodule Loki.Shell do
   @spec say_exists(Path.t) :: none()
   def say_exists(path) when is_input(path), do: say IO.ANSI.format([:blue, :bright, " *    exists ", :reset, path])
 
-  @doc false
   @spec say_exists(any) :: none()
   def say_exists(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -154,7 +142,6 @@ defmodule Loki.Shell do
     say IO.ANSI.format [:green, " *    rename ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
   end
 
-  @doc false
   @spec say_rename(any) :: none()
   def say_rename(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
 
@@ -167,7 +154,6 @@ defmodule Loki.Shell do
     say IO.ANSI.format [:green, " *      copy ", :reset, "#{source}", :green, " to ", :reset, "#{target}"]
   end
 
-  @doc false
   @spec say_copy(any) :: none()
   def say_copy(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
 
@@ -178,12 +164,10 @@ defmodule Loki.Shell do
   @spec say_remove(Path.t) :: none()
   def say_remove(path) when is_bitstring(path), do: say IO.ANSI.format [:green, " *    remove ", :reset, "#{path}"]
 
-  @doc false
   @spec say_remove(any) :: none()
   def say_remove(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
 
-  @doc false
   @spec format(String.t) :: String.t
   defp format(input), do: String.replace(input, "\n", "") |> String.downcase
 end

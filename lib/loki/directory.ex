@@ -27,7 +27,6 @@ defmodule Loki.Directory do
     end
   end
 
-  @doc false
   @spec create_directory(Path.t) :: none()
   def create_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -38,7 +37,6 @@ defmodule Loki.Directory do
   @spec exists_directory?(Path.t) :: Boolean.t
   def exists_directory?(path) when is_bitstring(path), do: File.exists?(path)
 
-  @doc false
   @spec exists_directory?(Path.t) :: none()
   def exists_directory?(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
@@ -58,7 +56,6 @@ defmodule Loki.Directory do
     end
   end
 
-  @doc false
   @spec copy_directory(any) :: none()
   def copy_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
 

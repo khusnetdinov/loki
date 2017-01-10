@@ -21,11 +21,9 @@ defmodule Loki.File do
   @spec create_file(Path.t) :: :ok | {:error, Atom.t}
   def create_file(path) when is_bitstring(path), do: create_file(path, "")
 
-  @doc false
   @spec create_file(any) :: none()
   def create_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
-  @doc false
   @spec create_file(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file(path, content) do
     case File.write(path, content, [:exclusive]) do
@@ -45,11 +43,9 @@ defmodule Loki.File do
   @spec create_file_force(Path.t) :: :ok | {:error, Atom.t}
   def create_file_force(path) when is_bitstring(path), do: create_file_force(path, "")
 
-  @doc false
   @spec create_file_force(any) :: none()
   def create_file_force(_any), do: raise ArgumentError, message: "Invalid argument, accept Path [, String]!"
 
-  @doc false
   @spec create_file_force(Path.t, String.t) :: :ok | {:error, Atom.t}
   def create_file_force(path, content) do
     case File.write(path, content, []) do
@@ -69,7 +65,6 @@ defmodule Loki.File do
   @spec exists_file?(Path.t) :: Boolean.t
   def exists_file?(path) when is_bitstring(path), do: File.exists?(path)
 
-  @doc false
   @spec exists_file?(any) :: none()
   def exists_file?(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
 
