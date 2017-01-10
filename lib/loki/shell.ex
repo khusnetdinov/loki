@@ -1,7 +1,10 @@
 defmodule Loki.Shell do
+
+
   @moduledoc """
   Helpers for interaction with user and printing message to shell.
   """
+
 
   @doc false
   defmacro is_input(input) do

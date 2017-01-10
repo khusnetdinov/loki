@@ -1,9 +1,11 @@
 defmodule Loki.Cmd do
   import Loki.Shell, only: [say: 1]
 
+
   @moduledoc """
   Executing terminal commands helpers.
   """
+
 
   @doc """
   Execute shell command with Env variables as options.

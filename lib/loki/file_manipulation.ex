@@ -6,9 +6,11 @@ defmodule Loki.FileManipulation do
   ]
   import Loki.File, only: [exists_file?: 1]
 
+
   @moduledoc """
   Helpers for content manipulation injecting, appending, and other.
   """
+
 
   @doc """
   Helper appends lines to file.
