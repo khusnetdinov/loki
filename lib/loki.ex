@@ -20,7 +20,7 @@ defmodule Loki do
   Imports all aveliable modules
   """
 
-  def __using__() do
+  defmacro __using__() do
     quote do
       import Loki.Shell
       import Loki.Cmd
