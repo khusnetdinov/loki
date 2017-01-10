@@ -16,7 +16,7 @@ defmodule Loki.Shell do
   @doc """
   Ask user input with given message. Returns tuple with parsed options.
   """
-  @spec ask(String.t | List.t) :: {List.t, List.t, List.t}
+  @spec ask(String.t) :: {List.t, List.t, List.t}
   def ask(message) when is_input(message) do
     args = format(IO.gets message)
     OptionParser.parse([args])
@@ -107,7 +107,7 @@ defmodule Loki.Shell do
   @doc """
   Printing message about to shell.
   """
-  @spec say_error(String.t | Atom.t) :: none()
+  @spec say_error(String.t) :: none()
   def say_error(message) when is_input(message), do: say IO.ANSI.format([:red, " *     error ", :reset, message])
 
   @spec say_error(any) :: none()
