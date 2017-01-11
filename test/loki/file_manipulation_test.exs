@@ -41,7 +41,7 @@ defmodule Loki.FileManipulationTest do
       capture_io(fn -> create_file("temp/inject", "line") end)
 
       assert capture_io(fn ->
-        inject_into_file("temp/inject", "injected", [:after, "line"])
+        inject_into_file("temp/inject", "injected", :after, "line")
       end) == "\e[32m *    inject \e[0mtemp/inject\e[0m\n"
     end
 
