@@ -81,10 +81,9 @@ defmodule Loki.FileManipulation do
   @doc """
   Helper injecting lines to file with `before` and `after` options.
   """
-  @spec inject_into_file(String.t, String.t, any) :: :ok | {:error, Atom.t}
-  def inject_into_file(path, injection, state) when is_bitstring(path) do
-    [order, value] = state
-    case split_list(read_to_list(path), value) do
+  @spec inject_into_file(Path.t, String.t, Atom.t, String.t) :: :ok | {:error, Atom.t}
+  def inject_into_file(path, injection, order, ancor) when is_bitstring(path) do
+    case split_list(read_to_list(path), ancor) do
       {:ok, head, elem, tail} ->
         message = IO.ANSI.format [:green, " *    inject ", :reset, path]
 
@@ -111,7 +110,7 @@ defmodule Loki.FileManipulation do
               {:error, :eopts}
           end
       {:error, _} ->
-        say_error(:enofnd)
+        say_error("#{:enofnd}")
         {:error, :enofnd}
     end
   end
