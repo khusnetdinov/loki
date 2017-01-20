@@ -94,6 +94,7 @@ Helpers for content manipulation injecting, appending, and other.
    - `replace_in_file/3` - Helper replaces lines in file.
    - `comment_in_file/2` - Helper comments line in file.
    - `uncomment_in_file/2` - Helper uncomments lines in file.
+   - `remove_comments_in_file` - Helper removes all comments in file.
 
 ## Documentation
 
