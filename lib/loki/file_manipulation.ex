@@ -193,6 +193,31 @@ defmodule Loki.FileManipulation do
   @spec uncomment_in_file(any) :: none()
   def uncomment_in_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, String!"
 
+  @doc """
+  Helper removes all commented lines.
+  """
+  @spec remove_comments_in_file(Path.t) :: none()
+  def remove_comments_in_file(path) when is_bitstring(path) do
+    edit_exists_file(path, fn ->
+      lines = Enum.reject(read_to_list(path), fn (line) ->
+        Regex.match?(~r/^\s*#+[\s,\w,\d]*$/, line)
+      end)
+
+
+      case write_file(path, lines) do
+        :ok ->
+          say IO.ANSI.format [:green, " * uncomment ", :reset, " in file #{path}"]
+          :ok
+        {:error, reason} ->
+          say_error(reason)
+          {:error, reason}
+      end
+    end)
+  end
+
+  @spec remove_comments_in_file(any) :: none()
+  def remove_comments_in_file(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
+
 
   @spec read_to_list(Path.t) :: List.t
   defp read_to_list(path) when is_bitstring(path), do: read_to_list(File.open!(path, [:read]), path, [])
