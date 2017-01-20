@@ -65,7 +65,6 @@ defmodule Loki.Directory do
   """
   @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def remove_directory(path) do
-    say_remove(path)
     case File.rm_rf(path) do
       {:ok, data} ->
         say_remove(path)
