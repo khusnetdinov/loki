@@ -68,6 +68,14 @@ defmodule Loki.FileManipulationTest do
         comment_in_file("temp/uncomment", "# uncomment")
       end) == "\e[32m *  comment \e[0mtemp/uncomment\e[0m\n"
     end
+
+    test "#remove_comments_in_file" do
+      capture_io(fn -> create_file("temp/remove_all_comments", "# comment\n # comment") end)
+
+      assert capture_io(fn ->
+        remove_comments_in_file("temp/remove_all_comments")
+      end) == "\e[32m * uncomment \e[0m in file temp/remove_all_comments\e[0m\n"
+    end
   end
 end
 
