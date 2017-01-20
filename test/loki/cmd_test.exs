@@ -20,6 +20,7 @@ defmodule Loki.CmdTest do
 
     test "#format_output" do
       {test_user, _} = System.cmd("whoami", [])
+
       assert capture_io(fn ->
         format_output(System.cmd("whoami", []))
       end) == "\n\e[33m#{test_user}\e[0m\n"

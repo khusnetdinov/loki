@@ -2,13 +2,9 @@ defmodule Loki.FileTest do
   use ExUnit.Case, async: true
 
   import Loki.File
-  import Loki.Directory
+  import Loki.TestHelpers
   import ExUnit.CaptureIO
 
-  setup_all do
-    create_directory("temp")
-    :ok
-  end
 
   describe "File" do
     test "#create_file" do
@@ -18,7 +14,7 @@ defmodule Loki.FileTest do
     end
 
     test "#create_file_force" do
-      capture_io(fn -> create_file("temp/force") end)
+      create_file_silently("force")
 
       assert capture_io(fn ->
         create_file_force("temp/force")
@@ -26,7 +22,7 @@ defmodule Loki.FileTest do
     end
 
     test "#copy_file" do
-      capture_io(fn -> create_file("temp/copy") end)
+      create_file_silently("copy")
 
       assert capture_io(fn ->
         copy_file("temp/copy", "temp/copied")
@@ -34,7 +30,7 @@ defmodule Loki.FileTest do
     end
 
     test "#create_link" do
-      capture_io(fn -> create_file("temp/link") end)
+      create_file_silently("link")
 
       assert capture_io(fn ->
         create_link("temp/link", "temp/linked")
@@ -42,7 +38,7 @@ defmodule Loki.FileTest do
     end
 
     test "#remove_file" do
-      capture_io(fn -> create_file("temp/remove") end)
+      create_file_silently("remove")
 
       assert capture_io(fn ->
         remove_file("temp/remove")
@@ -50,7 +46,7 @@ defmodule Loki.FileTest do
     end
 
     test "#rename_file" do
-      capture_io(fn -> create_file("temp/rename") end)
+      create_file_silently("rename")
 
       assert capture_io(fn ->
         rename("temp/rename", "temp/renamed")
