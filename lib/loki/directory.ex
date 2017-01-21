@@ -1,10 +1,5 @@
 defmodule Loki.Directory do
-  import Loki.Shell, only: [
-    say_create: 1,
-    say_error: 1,
-    say_copy: 2,
-    say_remove: 1,
-  ]
+  import Loki.Shell
 
 
   @moduledoc """
@@ -16,19 +11,22 @@ defmodule Loki.Directory do
   Helper for create directory.
   """
   @spec create_directory(Path.t) :: :ok | {:error, Atom.t}
-  def create_directory(path) when is_bitstring(path) do
-    case File.mkdir_p(path) do
-      :ok ->
-        say_create("directory " <> path)
-        :ok
-      {:error, reason} ->
-        say_error(reason)
-        {:error, reason}
-    end
-  end
+  def create_directory(path) when is_bitstring(path), do: create_directory(path, [])
 
   @spec create_directory(Path.t) :: none()
   def create_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
+
+  @spec create_directory(Path.t, Keyword.t) :: none()
+  def create_directory(path, opts) do
+    case File.mkdir_p(path) do
+      :ok ->
+        say_create("directory " <> path, opts)
+        :ok
+      {:error, reason} ->
+        say_error(reason, opts)
+        {:error, reason}
+    end
+  end
 
 
   @doc """
@@ -46,31 +44,42 @@ defmodule Loki.Directory do
   """
   @spec copy_directory(Path.t, Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
   def copy_directory(source, target) when is_bitstring(source) and is_bitstring(target) do
-    case File.cp_r(source, target) do
-      {:ok, data} ->
-        say_copy(source, target)
-        {:ok, data}
-      {:error, reason, data} ->
-        say_error(reason)
-        {:error, reason, data}
-    end
+    copy_directory(source, target, [])
   end
 
   @spec copy_directory(any) :: none()
   def copy_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path, Path!"
+
+  @spec copy_directory(Path.t, Path.t, Keyword.t) :: none()
+  def copy_directory(source, target, opts) do
+    case File.cp_r(source, target) do
+      {:ok, data} ->
+        say_copy(source, target, opts)
+        {:ok, data}
+      {:error, reason, data} ->
+        say_error(reason, opts)
+        {:error, reason, data}
+    end
+  end
 
 
   @doc """
   Helper for remove directory.
   """
   @spec remove_directory(Path.t) :: {:ok, [binary]} | {:error, String.t, binary}
-  def remove_directory(path) do
+  def remove_directory(path) when is_bitstring(path), do: remove_directory(path, [])
+
+  @spec remove_directory(any) :: none()
+  def remove_directory(_any), do: raise ArgumentError, message: "Invalid argument, accept Path!"
+
+  @spec remove_directory(Path.t, Keyword.t) :: none()
+  def remove_directory(path, opts) do
     case File.rm_rf(path) do
       {:ok, data} ->
-        say_remove(path)
+        say_remove(path, opts)
         {:ok, data}
       {:error, reason, data} ->
-        say_error(reason)
+        say_error(reason, opts)
         {:error, reason, data}
     end
   end

@@ -1,14 +1,14 @@
 defmodule Loki.FileManipulationTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
+  import Loki.File
   import Loki.FileManipulation
-  import Loki.TestHelpers
   import ExUnit.CaptureIO
 
 
   describe "FileManipulation" do
     test "#append_to_file" do
-      create_file_silently("append")
+      capture_io(fn -> create_file("temp/append") end)
 
       assert capture_io(fn ->
         append_to_file("temp/append", "appended")
@@ -16,7 +16,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#prepend_to_file" do
-      create_file_silently("prepend")
+      capture_io(fn -> create_file("temp/prepend") end)
 
       assert capture_io(fn ->
         prepend_to_file("temp/prepend", "prepended")
@@ -24,7 +24,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#remove_from_file" do
-      create_file_silently("remove", "remove")
+      capture_io(fn -> create_file("temp/remove", "remove") end)
 
       assert capture_io(fn ->
         remove_from_file("temp/remove", "remove")
@@ -32,7 +32,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#inject_into_file" do
-      create_file_silently("inject", "line")
+      capture_io(fn -> create_file("temp/inject", "line") end)
 
       assert capture_io(fn ->
         inject_into_file("temp/inject", "injected", :after, "line")
@@ -40,7 +40,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#replace_in_file" do
-      create_file_silently("replace", "replace")
+      capture_io(fn -> create_file("temp/replace", "replace") end)
 
       assert capture_io(fn ->
         replace_in_file("temp/replace", "replaced", "replace")
@@ -48,7 +48,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#comment_in_file" do
-      create_file_silently("comment", "comment")
+      capture_io(fn -> create_file("temp/comment", "comment") end)
 
       assert capture_io(fn ->
         comment_in_file("temp/comment", "comment")
@@ -56,7 +56,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#uncomment_in_file" do
-      create_file_silently("uncomment", "# uncomment")
+      capture_io(fn -> create_file("temp/uncomment", "# uncomment") end)
 
       assert capture_io(fn ->
         comment_in_file("temp/uncomment", "# uncomment")
@@ -64,7 +64,7 @@ defmodule Loki.FileManipulationTest do
     end
 
     test "#remove_comments_in_file" do
-      create_file_silently("remove_all_comments", "# comment\n # comment")
+      capture_io(fn -> create_file("temp/remove_all_comments", "# comment\n # comment") end)
 
       assert capture_io(fn ->
         remove_comments_in_file("temp/remove_all_comments")

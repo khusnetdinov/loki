@@ -1,8 +1,7 @@
 defmodule Loki.DirectoryTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import Loki.Directory
-  import Loki.TestHelpers
   import ExUnit.CaptureIO
 
 
@@ -18,7 +17,7 @@ defmodule Loki.DirectoryTest do
     end
 
     test "#copy_directory" do
-      create_directory_silently("copy_dir")
+      create_directory("temp/copy_dir", silent: true)
 
       assert capture_io(fn ->
         copy_directory("temp/copy_dir", "temp/copied_dir")
@@ -26,7 +25,7 @@ defmodule Loki.DirectoryTest do
     end
 
     test "#remove_directory" do
-      create_directory_silently("remove")
+      create_directory("temp/remove", silent: true)
 
       assert capture_io(fn ->
         remove_directory("temp/remove")

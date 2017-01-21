@@ -1,5 +1,5 @@
 defmodule Loki.CmdTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import Loki.Cmd
   import ExUnit.CaptureIO

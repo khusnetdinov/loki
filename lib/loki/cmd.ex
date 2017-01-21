@@ -1,5 +1,5 @@
 defmodule Loki.Cmd do
-  import Loki.Shell, only: [say: 1]
+  import Loki.Shell
 
 
   @moduledoc """
@@ -16,10 +16,10 @@ defmodule Loki.Cmd do
   @spec execute(any) :: none()
   def execute(_any), do: raise ArgumentError, message:  "Invalid argument, accept String [, List(Keyword)]!"
 
-  @spec execute(String.t, list(Keyword.t)) :: {Collectable.t, exit_status :: non_neg_integer}
-  def execute(string, opts) when is_bitstring(string) and is_list(opts) do
+  @spec execute(String.t, Keyword.t) :: {Collectable.t, exit_status :: non_neg_integer}
+  def execute(string, opts) do
     [command | args] = String.split(string)
-    say IO.ANSI.format [:green, " *   execute ", :reset, string]
+    say(IO.ANSI.format([:green, " *   execute ", :reset, string]), opts)
     System.cmd(command, args, env: opts)
   end
 
@@ -28,10 +28,10 @@ defmodule Loki.Cmd do
   Execute shell command with Env variables as options in given path.
   """
   @spec execute_in_path(String.t, Path.t) :: {Collectable.t, exit_status :: non_neg_integer}
-  def execute_in_path(string, path) when is_bitstring(string) and is_bitstring(path), do: execute_in_path(string, path, [])
+  def execute_in_path(string, path), do: execute_in_path(string, path, [])
 
-  @spec execute_in_path(String.t, Path.t, list(Keyword.t)) :: {Collectable.t, exit_status :: non_neg_integer}
-  def execute_in_path(string, path, opts) when is_bitstring(string) and is_bitstring(path) and is_list(opts) do
+  @spec execute_in_path(String.t, Path.t, Keyword.t) :: {Collectable.t, exit_status :: non_neg_integer}
+  def execute_in_path(string, path, opts) do
     [command | args] = String.split(string)
     say IO.ANSI.format [:green, " *   execute ", :reset, string <> " in path " <> path]
     System.cmd(command, args, env: opts, cd: path)
