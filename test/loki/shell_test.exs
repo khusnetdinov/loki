@@ -1,5 +1,5 @@
 defmodule Loki.ShellTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import Loki.Shell
   import ExUnit.CaptureIO
