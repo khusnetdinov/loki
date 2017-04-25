@@ -13,7 +13,7 @@ defmodule Loki do
 
     * `Loki.File` - Helpers for working with files.
 
-    * `Loki.FileManipulation` - Helpers for content manipulation injecting, apeending and other.
+    * `Loki.FileManipulation` - Helpers for content manipulation injecting, appending and other.
 
   """
 
