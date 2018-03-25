@@ -222,6 +222,7 @@ defmodule Loki.Shell do
   @spec format(String.t) :: String.t
   defp format(input, opts \\ [])
   defp format(input, [sensitive: true]), do: String.replace(input, "\n", "")
-  defp format(input, _opts), do: String.replace(input, "\n", "") |> String.downcase
+  defp format(input, _opts) do
+    String.downcase(String.replace(input, "\n", ""))
+  end
 end
-
