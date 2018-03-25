@@ -17,13 +17,14 @@ defmodule Loki.Shell do
   Ask user input with given message. Returns tuple with parsed options.
   """
   @spec ask(String.t) :: {List.t, List.t, List.t}
-  def ask(message) when is_input(message) do
-    args = format(IO.gets message)
+  def ask(message, opts \\ [])
+  def ask(message, opts) when is_input(message) do
+    args = format(IO.gets(message), opts)
     OptionParser.parse([args])
   end
 
-  @spec ask(any) :: none()
-  def ask(_any), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
+  @spec ask(any, any) :: none()
+  def ask(_message, _ops), do: raise ArgumentError, message: "Invalid argument, accept String or List!"
 
 
   @doc """
@@ -219,6 +220,8 @@ defmodule Loki.Shell do
 
 
   @spec format(String.t) :: String.t
-  defp format(input), do: String.replace(input, "\n", "") |> String.downcase
+  defp format(input, opts \\ [])
+  defp format(input, [sensitive: true]), do: String.replace(input, "\n", "")
+  defp format(input, _opts), do: String.replace(input, "\n", "") |> String.downcase
 end
 

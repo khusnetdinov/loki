@@ -15,6 +15,15 @@ defmodule Loki.ShellTest do
       assert_received {[], ["answer"], []}
     end
 
+    test "#ask sensitive input" do
+      assert capture_io("AnSwEr", fn ->
+        awnser = ask("Test question?", sensitive: true)
+        send self(), awnser
+      end) == "Test question?"
+
+      assert_received {[], ["AnSwEr"], []}
+    end
+
     test "#yes? yes input" do
       assert capture_io("yes", fn ->
         awnser = yes?("Test question?")
