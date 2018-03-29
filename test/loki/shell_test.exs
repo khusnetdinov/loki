@@ -8,25 +8,56 @@ defmodule Loki.ShellTest do
   describe "Shell" do
     test "#ask input" do
       assert capture_io("answer", fn ->
-        ask("Test question?")
-        send self(), "answer"
+        awnser = ask("Test question?")
+        send self(), awnser
       end) == "Test question?"
 
-      assert_received "answer"
+      assert_received {[], ["answer"], []}
     end
 
-    test "#yes? input" do
+    test "#ask sensitive input" do
+      assert capture_io("AnSwEr", fn ->
+        awnser = ask("Test question?", sensitive: true)
+        send self(), awnser
+      end) == "Test question?"
+
+      assert_received {[], ["AnSwEr"], []}
+    end
+
+    test "#yes? yes input" do
       assert capture_io("yes", fn ->
-        yes?("Test question?")
-        send self(), "yes"
+        awnser = yes?("Test question?")
+        send self(), awnser
       end) == "Test question?"
+
+      assert_received true
     end
 
-    test "#no? input" do
-      assert capture_io("no", fn ->
-        yes?("Test question?")
-        send self(), "no"
+    test "#yes? y input" do
+      assert capture_io("y", fn ->
+        awnser = yes?("Test question?")
+        send self(), awnser
       end) == "Test question?"
+
+      assert_received true
+    end
+
+    test "#no? no input" do
+      assert capture_io("no", fn ->
+        awnser = no?("Test question?")
+        send self(), awnser
+      end) == "Test question?"
+
+      assert_received true
+    end
+
+    test "#no? n input" do
+      assert capture_io("n", fn ->
+        awnser = no?("Test question?")
+        send self(), awnser
+      end) == "Test question?"
+
+      assert_received true
     end
 
     test "#say to shell" do
