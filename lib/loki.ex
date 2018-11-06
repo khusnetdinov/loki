@@ -1,5 +1,4 @@
 defmodule Loki do
-
   @moduledoc """
   Loki provide additional helpers for building command line application without running additional process.
 
@@ -17,11 +16,10 @@ defmodule Loki do
 
   """
 
-
   @doc """
   Imports all aveliable modules
   """
-  defmacro __using__() do
+  defmacro __using__(_) do
     quote do
       import Loki.Shell
       import Loki.Cmd
