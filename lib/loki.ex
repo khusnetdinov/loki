@@ -17,7 +17,7 @@ defmodule Loki do
   """
 
   @doc """
-  Imports all aveliable modules
+  Imports all availiable modules
   """
   defmacro __using__(_) do
     quote do
