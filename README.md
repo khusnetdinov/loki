@@ -24,8 +24,10 @@ Import all or desired module to scope:
 
 ```elixir
 defmodule Project do
+  # Import all modules
   use Loki
 
+  # Or import single modules
   import Loki.Shell
   import Loki.Cmd
   import Loki.Directory
